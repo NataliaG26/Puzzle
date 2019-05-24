@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.Pane?>
+
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <TextField fx:id="txtSearchPlayer" layoutX="168.0" layoutY="84.0" prefHeight="25.0" prefWidth="171.0" />
+      <Button layoutX="356.0" layoutY="84.0" mnemonicParsing="false" onAction="#searchPlayer" text="Buscar" />
+      <Button layoutX="493.0" layoutY="320.0" mnemonicParsing="false" onAction="#play" text="Jugar" />
+      <ListView fx:id="listView" layoutX="168.0" layoutY="142.0" prefHeight="203.0" prefWidth="224.0" />
+   </children>
+</Pane>
