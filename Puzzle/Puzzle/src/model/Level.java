@@ -4,10 +4,14 @@ public class Level {
 	
 	private Level next;
 	private Level prev;
-	
+	private String [] position;
 	
 	
 	public Level() {
+		setPosition(new String [8]);
+	}
+	
+	public void loadLevel() {
 		
 	}
 
@@ -25,6 +29,14 @@ public class Level {
 
 	public void setPrev(Level prev) {
 		this.prev = prev;
+	}
+
+	public String [] getPosition() {
+		return position;
+	}
+
+	public void setPosition(String [] position) {
+		this.position = position;
 	}
 	
 }

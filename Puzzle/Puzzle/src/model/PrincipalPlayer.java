@@ -1,12 +1,11 @@
 package model;
 
-public class PrincipalPlayer {
+public class PrincipalPlayer  {
 
 	private PrincipalPlayer next;
 	private PrincipalPlayer prev;
 	
 	public PrincipalPlayer() {
-		
 	}
 
 	public PrincipalPlayer getNext() {
