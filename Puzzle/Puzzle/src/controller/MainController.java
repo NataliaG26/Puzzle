@@ -1,9 +1,15 @@
 package controller;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.stage.Stage;
 import model.Category;
 import model.Scene;
 
@@ -45,9 +51,26 @@ public class MainController implements Initializable {
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		// TODO Auto-generated method stub
 		MainController mC = new MainController();
 		
 	}
+	
+	@FXML
+    void changeWindow(ActionEvent event) {
+		try {
+			javafx.scene.Scene	root = FXMLLoader.load(getClass().getResource("../Puzzle/Puzzle/src/userInterfaceBestScores.fxml"));
+		Stage stage = new Stage();
+		stage.setScene(root);
+		stage.show();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+    }
+
+	public Scene getPuzzle() {
+		return puzzle;
+	}
+	
+	
 
 }

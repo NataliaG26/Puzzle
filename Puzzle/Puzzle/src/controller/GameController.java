@@ -1,15 +1,20 @@
 package controller;
 
-import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.PixelReader;
@@ -17,16 +22,36 @@ import javafx.scene.image.WritableImage;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
+import model.Player;
+import model.Score;
 
 public class GameController implements Initializable{
 	
 	private MainController mainController;
 	
-	 @FXML
-	 private GridPane gridPane;
+	
+	
+		@FXML
+	    private GridPane gridPane;
 
-	 @FXML
-	 private Label time;
+	    @FXML
+	    private TableView<Score> scoresTable;
+
+	    @FXML
+	    private Label time;
+
+	    @FXML
+	    private Button scoresButton;
+
+	    @FXML
+	    private ChoiceBox<?> playersNames;
+
+	    @FXML
+	    private Label playerNmaeLabel;
+
+	 
+
+
 
 	@FXML
 	void pausa(ActionEvent event) {
@@ -105,8 +130,47 @@ public class GameController implements Initializable{
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		// TODO Auto-generated method stub
+		
 		GameController gC = new GameController();
+		this.showTable();
+		
+		
+	}
+	
+	public void scoresActionF(ActionEvent event) {
+		if(!scoresTable.isVisible()) {
+			scoresTable.setVisible(true);
+			scoresButton.setText("Back To the game");
+			gridPane.setVisible(false);
+		} 
+		else {
+		scoresTable.setVisible(false);
+		scoresButton.setText("Scores");
+		gridPane.setVisible(true);
+		}
+			
+	}
+
+	public void showTable() {
+		
+		
+		ObservableList<Score> data = FXCollections.observableArrayList(mainController.getPuzzle().getScoresvector());
+
+		
+
+		TableColumn<Score, String> name = new TableColumn<Score, String>("Namewe");
+		name.setCellValueFactory(new PropertyValueFactory<Score, String>("name"));
+		name.setMinWidth(140);
+		
+		TableColumn<Score, String> score = new TableColumn<Score, String>("Score");
+		score.setCellValueFactory(new PropertyValueFactory<Score, String>("totaltime"));
+		score.setMinWidth(140);
+		
+
+		
+	
+		scoresTable.setItems(data);
+		scoresTable.getColumns().addAll( score);
 		
 	}
 	

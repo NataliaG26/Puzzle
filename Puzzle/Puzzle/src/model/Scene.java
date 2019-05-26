@@ -2,6 +2,8 @@ package model;
 
 import java.util.ArrayList;
 
+import exceptions.PLayerNotFoundException;
+
 public class Scene {
 	
 	private Player firstPlayer;
@@ -10,7 +12,13 @@ public class Scene {
 	private ArrayList <Score> scoresvector;
 	
 	public Scene() {
-		
+		firstPlayer = null;
+		rootScore=null;
+		firstCategory=null;
+		scoresvector = new ArrayList<Score>();
+		Player l = new Player("Duvi");
+		Score r = new Score(l,1232131253);
+		scoresvector.add(r);
 	}
 	
 	public void createLevel() {
@@ -38,7 +46,7 @@ public class Scene {
 				addPlayer(e,root.getRight());
 	}
 	
-	public Player searchPlayer(String n) {
+	public Player searchPlayer(String n) throws PLayerNotFoundException {
 		if(n.equals(firstPlayer.getName())){
 			return firstPlayer;
 		} 
@@ -46,7 +54,7 @@ public class Scene {
 ;			return searchPlayer(n,firstPlayer);
 	}
 	
-	public Player searchPlayer(String n,Player r) {
+	public Player searchPlayer(String n,Player r) throws PLayerNotFoundException {
 		if(r.getLeft()!=null) {
 			if(n.equals(r.getLeft().getName())) {
 				return r.getLeft();
@@ -61,7 +69,7 @@ public class Scene {
 				return searchPlayer(n,r.getRight());
 		}
 		else
-		return null;
+		 throw new PLayerNotFoundException(n);
 	}
 	
 	public void addScore(Score r) {
@@ -85,8 +93,16 @@ public class Scene {
 				addScore(r,root.getRight());
 	}
 	
+	public void refreshScores() {
+		if(scoresvector.isEmpty())
+			this.chargeScores(rootScore);
+		else {
+		scoresvector.clear();
+		chargeScores(rootScore);
+		}
+	}
+	
 	public void chargeScores(Score current) {
-		current = rootScore;
 		while(current!=null) {
 			scoresvector.add(current);
 			

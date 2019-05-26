@@ -6,12 +6,10 @@ public class Player implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	private String name;
-	private Score score;
 	private Player left,right;
 
 	public Player(String name) {
 		this.name = name;
-		score =null;
 		left=null;
 		right=null;
 	}
@@ -25,12 +23,6 @@ public class Player implements Serializable{
 		this.name = name;
 	}
 
-	public Score getScore() {
-		return score;
-	}
- void setScore(Score score) {
-		this.score = score;
-	}
 
 	public int compareTo(Player p) {
 		return p.getName().compareTo(name);

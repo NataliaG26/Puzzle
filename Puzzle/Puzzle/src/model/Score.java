@@ -9,14 +9,26 @@ public class Score implements Serializable{
 	private String totaltime;
 	private long currentTime;
 	private Score right,left;
+	private Player player;
+	private String name;
 	
-	public Score(String totaltime, long currentTime) {
-		this.totaltime = totaltime;
-		this.currentTime = currentTime;
+	public Score(Player r, long c) {
+		totaltime = makeLongString(c);
+		this.currentTime = c;
+		setPlayer(r);
+		setName(r.getName());
 		right=null;
 		setLeft(null);
 	}
-
+	
+	public String makeLongString(Long currentTime) {
+		long hora = currentTime/3600000;
+		Long estohora = currentTime%3600000;
+		Long minuto = estohora/60000;
+		Long restominuto = estohora%60000;
+		return "time:"+hora+":"+minuto+":"+restominuto;
+		
+	}
 	public String getTotaltime() {
 		return totaltime;
 	}
@@ -47,6 +59,22 @@ public class Score implements Serializable{
 
 	public void setLeft(Score left) {
 		this.left = left;
+	}
+
+	public Player getPlayer() {
+		return player;
+	}
+
+	public void setPlayer(Player player) {
+		this.player = player;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 	
 }

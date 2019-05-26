@@ -19,7 +19,7 @@ public class PrincipalController implements Initializable{
 			
 		Parent root;
 		try {
-			root = FXMLLoader.load(getClass().getResource("../userInterface/BestScores.fxml"));
+			root = FXMLLoader.load(getClass().getResource("../Puzzle/Puzzle/src/userInterfaceBestScores.fxml"));
 		Stage stage = new Stage();
 		stage.setScene(new Scene(root));
 		stage.show();
@@ -32,7 +32,7 @@ public class PrincipalController implements Initializable{
     void play(ActionEvent event) {
     	try {
 			Parent root;
-			root = FXMLLoader.load(getClass().getResource("../userInterface/selectPlayer.fxml"));
+			root = FXMLLoader.load(getClass().getResource("../Puzzle/Puzzle/src/userInterfaceBestScores.fxml"));
 		Stage stage = new Stage();
 		Scene scene = new Scene(root);
 		stage.setScene(scene);
