@@ -16,13 +16,12 @@ public class PrincipalController implements Initializable{
 	
 	@FXML
     void bestSocres(ActionEvent event) {
-		
+			
+		Parent root;
 		try {
-			Parent root;
-			root = FXMLLoader.load(getClass().getResource("../userInterface/bestScores.fxml"));
+			root = FXMLLoader.load(getClass().getResource("../userInterface/BestScores.fxml"));
 		Stage stage = new Stage();
-		Scene scene = new Scene(root);
-		stage.setScene(scene);
+		stage.setScene(new Scene(root));
 		stage.show();
 		} catch (IOException e) {
 			e.printStackTrace();
