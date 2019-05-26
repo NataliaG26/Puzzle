@@ -6,13 +6,15 @@ public class Scene {
 	
 	private Player firstPlayer;
 	private Score rootScore;
-	private Level firstLevel;
+	private Category firstCategory;
 	private ArrayList <Score> scoresvector;
 	
 	public Scene() {
-		firstPlayer=null;
-		rootScore=null;
-		firstLevel=null;
+		
+	}
+	
+	public void createLevel() {
+		
 	}
 	
 	public void addPlayer(Player e) {
@@ -104,12 +106,7 @@ public class Scene {
 	public void setRootScore(Score rootScore) {
 		this.rootScore = rootScore;
 	}
-	public Level getFirstLevel() {
-		return firstLevel;
-	}
-	public void setFirstLevel(Level firstLevel) {
-		this.firstLevel = firstLevel;
-	}
+	
 
 	public ArrayList <Score> getScoresvector() {
 		return scoresvector;
@@ -117,6 +114,14 @@ public class Scene {
 
 	public void setScoresvector(ArrayList <Score> scoresvector) {
 		this.scoresvector = scoresvector;
+	}
+
+	public Category getFirstCategory() {
+		return firstCategory;
+	}
+
+	public void setFirstCategory(Category firstCategory) {
+		this.firstCategory = firstCategory;
 	}
 	
 	

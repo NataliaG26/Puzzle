@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.Pane?>
 
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SelectPlayerController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ScoresPlayersController">
    <children>
       <TextField fx:id="txtSearchPlayer" layoutX="175.0" layoutY="118.0" prefHeight="25.0" prefWidth="171.0" />
       <Button layoutX="354.0" layoutY="118.0" mnemonicParsing="false" onAction="#searchPlayer" text="Buscar" />
