@@ -9,52 +9,68 @@ public class Scene {
 	private Player firstPlayer;
 	private Score rootScore;
 	private Category firstCategory;
-	private ArrayList <Score> scoresvector;
+	private Player player;
+	//private ArrayList <Score> scoresvector;
 	
 	public Scene() {
-		firstPlayer = null;
-		rootScore=null;
-		firstCategory=null;
-		scoresvector = new ArrayList<Score>();
-		Player l = new Player("Duvi");
-		Score r = new Score(l,1232131253);
-		scoresvector.add(r);
+		
+	}
+	
+	public void checkKey() {
+		
 	}
 	
 	public void createLevel() {
 		
 	}
-	
-	public void addPlayer(Player e) {
-		if (firstPlayer==null) {
-			firstPlayer=e;
-		} else 
-			addPlayer(e,firstPlayer);
-	}
-	
-	public void addPlayer(Player e, Player root) {
-		if(root.compareTo(e)>1) {
-			if(root.getLeft()==null)
-				root.setLeft(e);
-			else
-				addPlayer(e,root.getLeft());
+	/*
+	 * retorna un arrailist con los nombres de los jugadores
+	 */
+	public ArrayList<String> getPlayersName(){
+		ArrayList<String> list = new ArrayList<String>();
+		if(firstPlayer != null) {
+			list = firstPlayer.playersName(list);
 		}
-		else
-			if(root.getRight()==null)
-				root.setRight(e);
-			else
-				addPlayer(e,root.getRight());
+		return list;
 	}
 	
-	public Player searchPlayer(String n) throws PLayerNotFoundException {
-		if(n.equals(firstPlayer.getName())){
-			return firstPlayer;
-		} 
-		else
-;			return searchPlayer(n,firstPlayer);
+	/*
+	 * intenta agregar un nuevo jugador, en orden segun el nombre
+	 * crea al jugador cuando lo va a agregar
+	 */
+	public void addPlayer(String name) {
+		
+		boolean add = false;
+		if (firstPlayer==null) {
+			firstPlayer=new Player(name);
+			add = !add;
+		} else {
+			firstPlayer.addPlayer(name);
+			add = !add;
+		}
+		if(!add) {
+			//throws new SameNameException();
+		}
+	}
+
+	public void selectedPlayer(String name) {
+		player = searchPlayer(name);
 	}
 	
-	public Player searchPlayer(String n,Player r) throws PLayerNotFoundException {
+	/*
+	 * busca un jugador por el nombre, si no lo encuentra
+	 * lanza una excepcion 
+	 */
+	public Player searchPlayer(String n) {
+		Player player = null;
+		if(firstPlayer != null) {
+			player = firstPlayer.searchPlayer(n);
+		}
+		//si es null no lo encontro
+		return player;
+	}
+	
+	public Player searchPlayer(String n,Player r) {
 		if(r.getLeft()!=null) {
 			if(n.equals(r.getLeft().getName())) {
 				return r.getLeft();
@@ -69,17 +85,19 @@ public class Scene {
 				return searchPlayer(n,r.getRight());
 		}
 		else
-		 throw new PLayerNotFoundException(n);
+		return null;
 	}
 	
 	public void addScore(Score r) {
 		if(rootScore==null) {
 			rootScore=r;
 		}
-		else 
-			addScore(r,rootScore);
+		else {
+			
+		}
+			//addScore(r,rootScore);
 	}
-	
+	/*
 	public void addScore(Score r, Score root) {
 		if(r.getCurrentTime()<root.getCurrentTime()) {
 			if(root.getLeft()==null) 
@@ -91,25 +109,20 @@ public class Scene {
 				root.setRight(r);
 			else
 				addScore(r,root.getRight());
-	}
-	
-	public void refreshScores() {
-		if(scoresvector.isEmpty())
-			this.chargeScores(rootScore);
-		else {
-		scoresvector.clear();
-		chargeScores(rootScore);
-		}
-	}
+	}*/
 	
 	public void chargeScores(Score current) {
+		current = rootScore;
 		while(current!=null) {
-			scoresvector.add(current);
+			//scoresvector.add(current);
 			
 			chargeScores(current.getLeft());
 			chargeScores(current.getRight());
 		}
 	}
+	
+	
+	
 	public Player getFirstPlayer() {
 		return firstPlayer;
 	}
@@ -122,24 +135,27 @@ public class Scene {
 	public void setRootScore(Score rootScore) {
 		this.rootScore = rootScore;
 	}
-	
-
+	/*
 	public ArrayList <Score> getScoresvector() {
 		return scoresvector;
 	}
-
 	public void setScoresvector(ArrayList <Score> scoresvector) {
 		this.scoresvector = scoresvector;
-	}
-
+	}*/
 	public Category getFirstCategory() {
 		return firstCategory;
 	}
-
 	public void setFirstCategory(Category firstCategory) {
 		this.firstCategory = firstCategory;
 	}
-	
+
+	public Player getPlayer() {
+		return player;
+	}
+
+	public void setPlayer(Player player) {
+		this.player = player;
+	}
 	
 
 }

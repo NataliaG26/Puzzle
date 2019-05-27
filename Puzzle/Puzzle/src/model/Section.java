@@ -4,14 +4,16 @@ public class Section {
 	
 	private int startWidth;
 	private int startHight;
-	private int finishWidth;
-	private int finishHight;
+	private int width;
+	private int hight;
+	private int id;
 	
-	public Section(int startWidth, int startHight, int finishWidth, int finishHight) {
+	public Section(int startWidth, int startHight, int width, int hight, int id) {
 		this.startWidth = startWidth;
 		this.startHight = startHight;
-		this.finishWidth = finishWidth;
-		this.finishHight = finishHight;
+		this.setWidth(width);
+		this.setHight(hight);
+		this.id = id;
 	}
 	
 	
@@ -27,17 +29,22 @@ public class Section {
 	public void setStartHight(int startHight) {
 		this.startHight = startHight;
 	}
-	public int getFinishWidth() {
-		return finishWidth;
+	public int getId() {
+		return id;
 	}
-	public void setFinishWidth(int finishWidth) {
-		this.finishWidth = finishWidth;
+	public void setId(int id) {
+		this.id = id;
 	}
-	public int getFinishHight() {
-		return finishHight;
+	public int getWidth() {
+		return width;
 	}
-	public void setFinishight(int finishight) {
-		this.finishHight = finishight;
+	public void setWidth(int width) {
+		this.width = width;
 	}
-
+	public int getHight() {
+		return hight;
+	}
+	public void setHight(int hight) {
+		this.hight = hight;
+	}
 }

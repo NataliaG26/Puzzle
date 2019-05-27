@@ -1,0 +1,3 @@
+Gato,gato.jpg,Gato,3
+Oso Panda,oso_panda.jpg,OsoPanda,4
+Alcon,alcon.jpg,Alcon,5

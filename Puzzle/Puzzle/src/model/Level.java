@@ -21,16 +21,11 @@ public class Level {
 	public void loadSections() {
 		int sw = 0;
 		int sh = 0;
-		System.out.println("WI"+width);
-		System.out.println("HI"+hight);
 		int w = width/puzzle.length;
-		System.out.println("wi"+w);
 		int h = hight/puzzle.length;
-		System.out.println("hi"+h);
 		for (int i = 0; i < puzzle.length; i++) {
 			for (int j = 0; j < puzzle.length; j++) {
-				System.out.println("sh "+sh+" sw "+sw+" w "+w+" h "+h);
-				puzzle[i][j] = new Section(sw, sh, w, h);
+				puzzle[i][j] = new Section(sw, sh, w, h, (i+j));
 				sw += w;
 			}
 			sw = 0;
@@ -78,7 +73,6 @@ public class Level {
 
 	public void setWidth(int width) {
 		this.width = width;
-		System.out.println("llegue a W"+width);
 	}
 
 	public int getHight() {

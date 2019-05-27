@@ -3,55 +3,34 @@ package controller;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.PixelReader;
 import javafx.scene.image.WritableImage;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
-import model.Player;
-import model.Score;
 
-public class GameController implements Initializable{
+public class GameController implements Initializable, EventHandler<KeyEvent>{
 	
 	private MainController mainController;
 	
-	
-	
-		@FXML
-	    private GridPane gridPane;
-
-	    @FXML
-	    private TableView<Score> scoresTable;
-
-	    @FXML
-	    private Label time;
-
-	    @FXML
-	    private Button scoresButton;
-
-	    @FXML
-	    private ChoiceBox<?> playersNames;
-
-	    @FXML
-	    private Label playerNmaeLabel;
-
+	 @FXML
+	 private GridPane gridPane;
 	 
+	 private int[] posGridPaneNull;
 
-
+	 @FXML
+	 private Label time;
 
 	@FXML
 	void pausa(ActionEvent event) {
@@ -59,16 +38,56 @@ public class GameController implements Initializable{
 		Image img = new Image(mainController.getImage());
 		int width = (int)img.getWidth();
 		int hight = (int)img.getHeight();
-		System.out.println("w"+width);
-		System.out.println("h"+hight);
 		mainController.loadLevel(width, hight);
 		createGridPane(3);
 		load(3);
+		
+		
+	}
+	
+	public void moveDown() {
+		Node node = getNodeByRowColumnIndex(posGridPaneNull[0], posGridPaneNull[1]);
+		gridPane.getChildren().remove(node);
+		gridPane.add(node, posGridPaneNull[0], posGridPaneNull[1]);
+		posGridPaneNull[0]--;
+		posGridPaneNull[1]--;
+		
+		}
+	
+	@Override
+	public void handle(KeyEvent event) {
+		switch (event.getCode()) {
+		case DOWN: 
+			System.out.println("siiii");
+			moveDown();
+		break;
+		default:
+			break;
+		}
 	}
 	    
 	@FXML
-	void touch(ActionEvent event) {
-		String datos = ((Node)event.getSource()).getId();
+	void touch(KeyEvent event) {
+		//Node nod = getNodeByRowColumnIndex (2, 1)
+		//if(event.getCode() == KeyCode.DOWN)
+			System.out.println("siiii");
+			
+		gridPane.add(new Label("hhhh"), 2, 2);
+	}
+	
+	public Node getNodeByRowColumnIndex (final int row, final int column) {
+	    Node result = null;
+	    ObservableList<Node> childrens = gridPane.getChildren();
+
+	    for (Node node : childrens) {
+	        if((int)gridPane.getChildren().indexOf(node) == row && (int)gridPane.getChildren().indexOf(node) == column) {
+	            result = node;
+	            System.out.println("if");
+	            break;
+	        }
+	    }
+
+	    return result;
 	}
 	
 	public void createGridPane(int n) {
@@ -82,6 +101,7 @@ public class GameController implements Initializable{
 		
 	}
 	
+	
 	public void load(int m) {
 		//WritableImage(PixelReader reader, int width, int height)
 		gridPane.setGridLinesVisible(true);
@@ -92,86 +112,36 @@ public class GameController implements Initializable{
 			for (int j = 0; j < m; j++) {
 				if(i != m-1 || j !=m-1) {
 				int[] inf = mainController.dimentions(i, j);
-				System.out.println("siii");
 				WritableImage wi = new WritableImage(px, inf[0], inf[1], inf[2], inf[3]);
 				ImageView imgV = new ImageView();
 				imgV.setImage(wi);
-
+				imgV.setId(inf[4]+"");
 				gridPane.add(imgV, j, i);
+				GridPane.setColumnIndex(imgV, j);
+				GridPane.setRowIndex(imgV, i);
 				}
 			}
 		}
-		/*
-		
+		System.out.println();
+		posGridPaneNull[0] = m-1;
+		posGridPaneNull[1] = m-1;
 		gridPane.setAlignment(Pos.CENTER);
-		File file = new File("../ImagesLevels/2.jpg");
 		
-		//int w = (int)img.getWidth()/2;
-		//int h = (int)img.getHeight()/2;
-		
-		
-		imgV.setImage(wi);
-		gridPane.add(imgV, 0, 0);
-		boolean f = imgV.getImage() != null;
-		
-		gridPane.getColumnConstraints().add(new ColumnConstraints());
-		gridPane.getRowConstraints().add(new RowConstraints());
-		//WritableImage wi2 = new WritableImage(px, w, h, w, h);
-		wi= new WritableImage(px, w, h, w, h);
-		ImageView imgV2 = new ImageView();
-		imgV2.setImage(wi);
-		gridPane.add(imgV2, 1, 1);
-		*/
 	}
 
 	public GameController() {
 		mainController = new MainController();
 	}
 	
+	public void setMainController(MainController mainController) {
+		this.mainController = mainController;
+	}
+	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		
+		// TODO Auto-generated method stub
 		GameController gC = new GameController();
-		this.showTable();
-		
-		
-	}
-	
-	public void scoresActionF(ActionEvent event) {
-		if(!scoresTable.isVisible()) {
-			scoresTable.setVisible(true);
-			scoresButton.setText("Back To the game");
-			gridPane.setVisible(false);
-		} 
-		else {
-		scoresTable.setVisible(false);
-		scoresButton.setText("Scores");
-		gridPane.setVisible(true);
-		}
-			
-	}
-
-	public void showTable() {
-		
-		
-		ObservableList<Score> data = FXCollections.observableArrayList(mainController.getPuzzle().getScoresvector());
-
-		
-
-		TableColumn<Score, String> name = new TableColumn<Score, String>("Namewe");
-		name.setCellValueFactory(new PropertyValueFactory<Score, String>("name"));
-		name.setMinWidth(140);
-		
-		TableColumn<Score, String> score = new TableColumn<Score, String>("Score");
-		score.setCellValueFactory(new PropertyValueFactory<Score, String>("totaltime"));
-		score.setMinWidth(140);
-		
-
-		
-	
-		scoresTable.setItems(data);
-		scoresTable.getColumns().addAll( score);
-		
+		posGridPaneNull = new int[2];
 	}
 	
 }

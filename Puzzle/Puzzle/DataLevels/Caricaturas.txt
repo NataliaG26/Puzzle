@@ -1,0 +1,3 @@
+Marilyn Monroe,Marilyn_Monroe.jpg,MarilynMonrow,3
+Albert Einstein,Albert_Einstein.jpg,AlbertEinstein,4
+Julia Roberts,Julia_Roberts.jpg,JuliaRoberts,5

@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,18 +18,47 @@ import javafx.stage.Stage;
 
 public class SelectedPlayerController implements Initializable{
 	
+private MainController mainController;
+	
+	@FXML
+    private TextField txtNewPlayer;
+
+    @FXML
+    private ListView<String> listView;
+
+    @FXML
+    void addPlayer(ActionEvent event) {
+    	//controlar exception, mostrar mensaje "debe usar otro nombre"
+    	if(!txtNewPlayer.getText().equals("")) {
+    		mainController.addPlayer(txtNewPlayer.getText());
+    	}
+    	actualizeListView();
+    	
+    }
+    
+    public void actualizeListView() {
+    	ObservableList<String> list = FXCollections.observableArrayList(mainController.getPlayersName());
+    	listView.setItems(list);
+    	
+    }
+    
+    public void selectPlayer() {
+    	String name = listView.getSelectionModel().getSelectedItem();
+    		mainController.selectedPlayer(name);
+
+    }
+    
+    
+    /*
+     * play boton nueva ventana
+     */
 	 @FXML
-	    private TextField txtSearchPlayer;
-
-	    @FXML
-	    private ListView<?> listView;
-	    
-
-	    @FXML
-	    void play(ActionEvent event) {
-	    	try {
-				Parent root;
-				root = FXMLLoader.load(getClass().getResource("../userInterface/selectLevel.fxml"));
+	 void play(ActionEvent event) {
+		 selectPlayer();
+	    try {
+	    	FXMLLoader loader = new FXMLLoader(getClass().getResource("../userInterface/selectLevel.fxml"));
+	    	Parent root = loader.load();
+	    	mainController.conection(loader, "SelectLevel");
 			Stage stage = new Stage();
 			Scene scene = new Scene(root);
 			stage.setScene(scene);
@@ -35,14 +66,16 @@ public class SelectedPlayerController implements Initializable{
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-	    }
+	    	mainController.newLevel();
+	 }
 
-	    @FXML
-	    void searchPlayer(ActionEvent event) {
-
-	    }
-	
-	
+	/*
+	 * cambia el mainController
+	 */
+	public void setMainController(MainController mainController) {
+		this.mainController = mainController;
+	}
+	    
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		// TODO Auto-generated method stub

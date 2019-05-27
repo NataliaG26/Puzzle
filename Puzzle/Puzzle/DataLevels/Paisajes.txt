@@ -1,0 +1,3 @@
+Campo,campo.jpg,Campo,3
+Rio de Colores,rio_de_7_Colores.jpg,RioDeColores,4
+Nieve,nieve.jpg,Nieve,5

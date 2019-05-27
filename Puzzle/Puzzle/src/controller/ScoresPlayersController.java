@@ -14,6 +14,9 @@ import javafx.stage.Stage;
 public class ScoresPlayersController implements Initializable{
 	
 
+private MainController mainController;
+	
+
 	
 	public void goToPrincipal(ActionEvent event) {
 		try {
@@ -28,7 +31,9 @@ public class ScoresPlayersController implements Initializable{
 		}
 	}
 	
-	
+	public void setMainController(MainController mainController) {
+		this.mainController = mainController;
+	}
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
