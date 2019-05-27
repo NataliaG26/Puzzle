@@ -75,13 +75,14 @@ public class SelectLevelController implements Initializable{
 	        for(int i=0;i<mainController.getsCategories().size();i++) {
 	        	String rn ;
 	        	data.add(mainController.getsCategories().get(i).getName());
-	        	mainController.getsCategories().get(i).getLevels();
+	        	for(int j=0;j<mainController.getsCategories().get(i).getLevels().size();j++) {
+	        		names.add(mainController.getsCategories().get(i).getLevels().get(j).getName());
+	        		ComboBoxListCell r = new ComboBoxListCell();
+	        		levelsTable. setCellFactory(r.forListView(names)); 
+	        	}
 	        }
-	       
-	        names.add("anonym");
 	        
 	          
-	        levelsTable.setItems(data);
-	        levelsTable.setCellFactory(ComboBoxListCell.forListView(names)); 
+	        levelsTable.setItems(data);       
 	}
 }
