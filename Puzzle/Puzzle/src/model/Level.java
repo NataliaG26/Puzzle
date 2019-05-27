@@ -4,20 +4,50 @@ public class Level {
 	
 	private Level next;
 	private Level prev;
+	private String name;
 	private String image;
+	private String key;
+	private int dificulty;
 	private int width;
 	private int hight;
-	private String [] position;
+	private Boolean flag;
 	private Section[][] puzzle;
-	//private int dificulty;
 	
+
 	
-	
-	public Level(String image, int n) {
-		this.setImage(image);
-		setPuzzle(new Section[n][n]);
+	public Level(String name, String image, String key, int dificulty) {
+		this.name = name;
+		this.image = image;
+		this.key = key;
+		this.dificulty = dificulty;
+		prev=null;
+		next=null;
 	}
-	
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getKey() {
+		return key;
+	}
+
+	public void setKey(String key) {
+		this.key = key;
+	}
+
+	public int getDificulty() {
+		return dificulty;
+	}
+
+	public void setDificulty(int dificulty) {
+		this.dificulty = dificulty;
+	}
+
 	public void loadSections() {
 		int sw = 0;
 		int sh = 0;
@@ -51,14 +81,6 @@ public class Level {
 		this.prev = prev;
 	}
 
-	public String [] getPosition() {
-		return position;
-	}
-
-	public void setPosition(String [] position) {
-		this.position = position;
-	}
-
 	public String getImage() {
 		return image;
 	}
@@ -89,6 +111,14 @@ public class Level {
 
 	public void setPuzzle(Section[][] puzzle) {
 		this.puzzle = puzzle;
+	}
+
+	public Boolean getFlag() {
+		return flag;
+	}
+
+	public void setFlag(Boolean flag) {
+		this.flag = flag;
 	}
 	
 }

@@ -10,6 +10,7 @@ public class Player implements Serializable{
 	private Score score;
 	private Player left;
 	private Player right;
+	private Boolean flag;
 	private ArrayList<String> keys;
 
 	public Player(String name) {
@@ -113,6 +114,14 @@ public class Player implements Serializable{
 
 	public void setKeys(ArrayList<String> keys) {
 		this.keys = keys;
+	}
+
+	public Boolean getFlag() {
+		return flag;
+	}
+
+	public void setFlag(Boolean flag) {
+		this.flag = flag;
 	}
 	
 	

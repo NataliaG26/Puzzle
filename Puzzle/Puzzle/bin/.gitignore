@@ -1,9 +1,4 @@
 /2.jpg
-/controller/
-/exceptions/
-/model/
-/threads/
-/userInterface/
 /Albert_Einstein.jpg
 /Julia_Roberts.jpg
 /Marilyn_Monroe.jpg
@@ -12,4 +7,9 @@
 /gato.jpg
 /nieve.jpg
 /oso_panda.jpg
+/controller/
+/exceptions/
+/model/
 /rio_de_7_Colores.jpg
+/threads/
+/userInterface/

@@ -1,5 +1,8 @@
 package model;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import exceptions.PLayerNotFoundException;
@@ -10,7 +13,7 @@ public class Scene {
 	private Score rootScore;
 	private Category firstCategory;
 	private Player player;
-	//private ArrayList <Score> scoresvector;
+	
 	
 	public Scene() {
 		
@@ -34,6 +37,16 @@ public class Scene {
 		return list;
 	}
 	
+	public void loadCategorys() throws IOException {
+		BufferedReader b = new BufferedReader(new FileReader(Category.pathNames));
+		String line;
+		while((line=b.readLine())!=null) {	
+			this.addCategory(new Category(line));
+		}
+		b.close();
+	}
+	
+
 	/*
 	 * intenta agregar un nuevo jugador, en orden segun el nombre
 	 * crea al jugador cuando lo va a agregar
@@ -89,17 +102,14 @@ public class Scene {
 	}
 	
 	public void addScore(Score r) {
-		if(rootScore==null) {
+		if(rootScore==null) 
 			rootScore=r;
-		}
-		else {
-			
-		}
-			//addScore(r,rootScore);
+		else 
+			addScore(r,this.rootScore);
 	}
-	/*
+	
 	public void addScore(Score r, Score root) {
-		if(r.getCurrentTime()<root.getCurrentTime()) {
+		if(r.getCurrentTime()>root.getCurrentTime()) {
 			if(root.getLeft()==null) 
 				root.setLeft(r);
 			 else
@@ -109,19 +119,24 @@ public class Scene {
 				root.setRight(r);
 			else
 				addScore(r,root.getRight());
-	}*/
-	
-	public void chargeScores(Score current) {
-		current = rootScore;
-		while(current!=null) {
-			//scoresvector.add(current);
-			
-			chargeScores(current.getLeft());
-			chargeScores(current.getRight());
-		}
 	}
 	
-	
+	public void addCategory(Category c) {
+		if(firstCategory==null) {
+			firstCategory=c;
+		} 
+		else {
+			addCategory(c,this.firstCategory);
+		}
+	}
+	public void addCategory(Category c,Category reference) {
+		if(reference.getNext()==null) {
+			reference.setNext(c);
+			c.setPrev(reference);
+		} 
+		else
+			addCategory(c,reference.getNext());
+	}
 	
 	public Player getFirstPlayer() {
 		return firstPlayer;
@@ -135,13 +150,7 @@ public class Scene {
 	public void setRootScore(Score rootScore) {
 		this.rootScore = rootScore;
 	}
-	/*
-	public ArrayList <Score> getScoresvector() {
-		return scoresvector;
-	}
-	public void setScoresvector(ArrayList <Score> scoresvector) {
-		this.scoresvector = scoresvector;
-	}*/
+
 	public Category getFirstCategory() {
 		return firstCategory;
 	}
