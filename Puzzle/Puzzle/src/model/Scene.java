@@ -15,19 +15,21 @@ public class Scene {
 	private Player player;
 	
 	
+	/** Class Builder 
+	 */
 	public Scene() {
-		
+	
 	}
 	
 	public void checkKey() {
-		
 	}
 	
 	public void createLevel() {
 		
 	}
-	/*
-	 * retorna un arrailist con los nombres de los jugadores
+
+	/** This method returns a list of the players name
+	 * @return an ArrayList with the players names. 
 	 */
 	public ArrayList<String> getPlayersName(){
 		ArrayList<String> list = new ArrayList<String>();
@@ -37,6 +39,9 @@ public class Scene {
 		return list;
 	}
 	
+	/** Loads the categories of the game from a file.
+	 * @throws IOException
+	 */
 	public void loadCategorys() throws IOException {
 		BufferedReader b = new BufferedReader(new FileReader(Category.pathNames));
 		String line;
@@ -50,6 +55,9 @@ public class Scene {
 	/*
 	 * intenta agregar un nuevo jugador, en orden segun el nombre
 	 * crea al jugador cuando lo va a agregar
+	 */
+	/** Tries to add a new player to the linked list.
+	 * @param name creates a new player -added this player if it's possible- <Pre/>name!=null && name can't be repeated.
 	 */
 	public void addPlayer(String name) {
 		
@@ -66,13 +74,17 @@ public class Scene {
 		}
 	}
 
+	/** Search in the linked list the selected player of the interface.
+	 * @param name -the name that is going to be searched- <Pre/>name!=null
+	 */
 	public void selectedPlayer(String name) {
 		player = searchPlayer(name);
 	}
 	
-	/*
-	 * busca un jugador por el nombre, si no lo encuentra
-	 * lanza una excepcion 
+
+	/** Search in the linked list the selected player of the interface.
+	 * @param name -the name that is going to be searched- <Pre/>name!=null
+	 * @throws PlayerNotFoundException if the player is not found.
 	 */
 	public Player searchPlayer(String n) {
 		Player player = null;
@@ -83,7 +95,14 @@ public class Scene {
 		return player;
 	}
 	
-	public Player searchPlayer(String n,Player r) {
+	/** Search in the linked list the selected player of the interface.
+	 * @param n -the name that is going to be searched- <Pre/>name!=null.
+	 * @param r -the reference of player that is use to look in the three- <Pre/>r!=null.
+	 * @return the Player if it's found or
+	 * @throws PLayerNotFoundException 
+	 * @throws PlayerNotFoundException if the player is not found.
+	 */
+	public Player searchPlayer(String n,Player r) throws PLayerNotFoundException {
 		if(r.getLeft()!=null) {
 			if(n.equals(r.getLeft().getName())) {
 				return r.getLeft();
@@ -97,8 +116,10 @@ public class Scene {
 			else
 				return searchPlayer(n,r.getRight());
 		}
-		else
-		return null;
+		else {
+			throw new PLayerNotFoundException(n);
+		}
+		
 	}
 	
 	public void addScore(Score r) {

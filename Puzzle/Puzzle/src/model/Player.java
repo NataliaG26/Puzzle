@@ -13,15 +13,25 @@ public class Player implements Serializable{
 	private Boolean flag;
 	private ArrayList<String> keys;
 
+	/** Player class builder.
+	 * @param name -is the name of the player- <Pre/> name!=null.
+	 */
 	public Player(String name) {
 		this.name = name;
 		setKeys(new ArrayList<String>());
 	}
 	
+	/** Adds a key to the player list of keys (ArrayList).
+	 * @param key -the id of the level necessary to unlock more levels- <Pre/>key!=null.
+	 */
 	public void addKey(String key) {
 		keys.add(key);
 	}
 	
+	/** Return the list of the players names.
+	 * @param list -list of players in the game- 
+	 * @return a list of players names.
+	 */
 	public ArrayList<String> playersName(ArrayList<String> list){
 		list.add(this.name);
 		if(left != null) {
@@ -33,6 +43,10 @@ public class Player implements Serializable{
 		return list;
 	}
 	
+	/** Adds a player to the linked list of players.
+	 * @param name -the name of the player that's going to be added, technically thats all we need to add a player- <Pre/>name!=null.
+	 * @return true if the player was added false if the name is repeated
+	 */
 	public boolean addPlayer(String name) {
 		boolean add = false;
 		int dif = name.compareTo(this.name);
@@ -56,6 +70,10 @@ public class Player implements Serializable{
 		return add;
 	}
 	
+	/** Search a player in the linked list.
+	 * @param name -the name of the player that is going to be searched- <Pre/>name!=null.
+	 * @return the player with the name or null if the player was not found.
+	 */
 	public Player searchPlayer(String name) {
 		Player player = null;
 		int dif = this.name.compareTo(name);
@@ -68,61 +86,92 @@ public class Player implements Serializable{
 		}
 		return player;
 	}
-	
+
+	/**
+	 * @return the name
+	 */
 	public String getName() {
 		return name;
 	}
 
+	/**
+	 * @param name the name to set
+	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 
+	/**
+	 * @return the score
+	 */
 	public Score getScore() {
 		return score;
 	}
- void setScore(Score score) {
+
+	/**
+	 * @param score the score to set
+	 */
+	public void setScore(Score score) {
 		this.score = score;
 	}
 
-	public int compareTo(Player p) {
-		return p.getName().compareTo(name);
-	}
-
+	/**
+	 * @return the left
+	 */
 	public Player getLeft() {
 		return left;
 	}
 
+	/**
+	 * @param left the left to set
+	 */
 	public void setLeft(Player left) {
 		this.left = left;
 	}
 
-	
+	/**
+	 * @return the right
+	 */
 	public Player getRight() {
 		return right;
 	}
 
-
+	/**
+	 * @param right the right to set
+	 */
 	public void setRight(Player right) {
 		this.right = right;
 	}
 
-
-	public ArrayList<String> getKeys() {
-		return keys;
-	}
-
-
-	public void setKeys(ArrayList<String> keys) {
-		this.keys = keys;
-	}
-
+	/**
+	 * @return the flag
+	 */
 	public Boolean getFlag() {
 		return flag;
 	}
 
+	/**
+	 * @param flag the flag to set
+	 */
 	public void setFlag(Boolean flag) {
 		this.flag = flag;
 	}
+
+	/**
+	 * @return the keys
+	 */
+	public ArrayList<String> getKeys() {
+		return keys;
+	}
+
+	/**
+	 * @param keys the keys to set
+	 */
+	public void setKeys(ArrayList<String> keys) {
+		this.keys = keys;
+	}
+	
+
 	
 	
 	

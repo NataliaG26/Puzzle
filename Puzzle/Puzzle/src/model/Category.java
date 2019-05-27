@@ -20,13 +20,21 @@ public class Category {
 	
 	
 	
+	/** Builder of the class Category.
+	 * @param name
+	 */
 	public Category(String name) {
 		this.name = name;
 		this.addLevel(level);
 		next=null;
 		prev=null;
+		firstLevel=null;
 	}
 	
+	/** Loads the levels of the category type.
+	 * @throws NumberFormatException 
+	 * @throws IOException
+	 */
 	public void loadLevelslevels() throws NumberFormatException, IOException {
 		String r;
 		if(this.getName().equals("Animales"))
@@ -47,6 +55,10 @@ public class Category {
 	}
 	
 	
+	/** Adds part 1 A level to the category.
+	 * if the firstlevel !=null try add part2
+	 * @param l - the level that it's going to be added-
+	 */
 	public void addLevel(Level l) {
 		if(firstLevel==null)
 			firstLevel=l;
@@ -54,6 +66,10 @@ public class Category {
 			addLevel(l,firstLevel);
 	}
 	
+	/** addLevel part2 adds a level to the linked list last position
+	 * @param l -level object that it's going to be added- l!=null
+	 * @param r -the level that used as reference to know the position in the linked list- r!=null
+	 */
 	public void addLevel(Level l,Level r) {
 		if(r.getNext()==null) {
 			r.setNext(l);
@@ -67,61 +83,103 @@ public class Category {
 		firstLevel.loadSections();
 	}
 
+	/**
+	 * @return the firstLevel
+	 */
 	public Level getFirstLevel() {
 		return firstLevel;
 	}
 
+	/**
+	 * @param firstLevel the firstLevel to set
+	 */
 	public void setFirstLevel(Level firstLevel) {
 		this.firstLevel = firstLevel;
 	}
 
+	/**
+	 * @return the name
+	 */
 	public String getName() {
 		return name;
 	}
 
+	/**
+	 * @param name the name to set
+	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 
+	/**
+	 * @return the images
+	 */
 	public String[] getImages() {
 		return images;
 	}
 
+	/**
+	 * @param images the images to set
+	 */
 	public void setImages(String[] images) {
 		this.images = images;
 	}
 
+	/**
+	 * @return the next
+	 */
 	public Category getNext() {
 		return next;
 	}
 
+	/**
+	 * @param next the next to set
+	 */
 	public void setNext(Category next) {
 		this.next = next;
 	}
 
+	/**
+	 * @return the prev
+	 */
 	public Category getPrev() {
 		return prev;
 	}
 
+	/**
+	 * @param prev the prev to set
+	 */
 	public void setPrev(Category prev) {
 		this.prev = prev;
 	}
 
-
+	/**
+	 * @return the level
+	 */
 	public Level getLevel() {
 		return level;
 	}
 
-
+	/**
+	 * @param level the level to set
+	 */
 	public void setLevel(Level level) {
 		this.level = level;
 	}
 
+	/**
+	 * @return the flag
+	 */
 	public Boolean getFlag() {
 		return flag;
 	}
 
+	/**
+	 * @param flag the flag to set
+	 */
 	public void setFlag(Boolean flag) {
 		this.flag = flag;
 	}
+
+	
 }
