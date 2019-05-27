@@ -11,18 +11,20 @@ public class Player implements Serializable{
 	private Player left;
 	private Player right;
 	private Boolean flag;
+	private Score rootScore;
 	private ArrayList<String> keys;
 
 	/** Player class builder.
-	 * @param name -is the name of the player- <Pre/> name!=null.
+	 * @param name -is the name of the player- </Pre> name!=null.
 	 */
 	public Player(String name) {
 		this.name = name;
+		rootScore=null;
 		setKeys(new ArrayList<String>());
 	}
 	
 	/** Adds a key to the player list of keys (ArrayList).
-	 * @param key -the id of the level necessary to unlock more levels- <Pre/>key!=null.
+	 * @param key -the id of the level necessary to unlock more levels-</Pre> key!=null.
 	 */
 	public void addKey(String key) {
 		keys.add(key);
@@ -44,7 +46,7 @@ public class Player implements Serializable{
 	}
 	
 	/** Adds a player to the linked list of players.
-	 * @param name -the name of the player that's going to be added, technically thats all we need to add a player- <Pre/>name!=null.
+	 * @param name -the name of the player that's going to be added, technically thats all we need to add a player- </Pre> name!=null.
 	 * @return true if the player was added false if the name is repeated
 	 */
 	public boolean addPlayer(String name) {
@@ -71,7 +73,7 @@ public class Player implements Serializable{
 	}
 	
 	/** Search a player in the linked list.
-	 * @param name -the name of the player that is going to be searched- <Pre/>name!=null.
+	 * @param name -the name of the player that is going to be searched- </Pre> name!=null.
 	 * @return the player with the name or null if the player was not found.
 	 */
 	public Player searchPlayer(String name) {
@@ -86,6 +88,17 @@ public class Player implements Serializable{
 		}
 		return player;
 	}
+	
+	/** Adds an score to the scores three
+	 * @param r -the score that is going to be added- </Pre> r!=null.
+	 */
+	public void addScore(Score r) {
+		if(rootScore==null) 
+			rootScore=r;
+		else 
+			rootScore.addScore(r);
+	}
+	
 
 	/**
 	 * @return the name
@@ -170,9 +183,18 @@ public class Player implements Serializable{
 	public void setKeys(ArrayList<String> keys) {
 		this.keys = keys;
 	}
-	
 
-	
-	
-	
+	/**
+	 * @return the rootScore
+	 */
+	public Score getRootScore() {
+		return rootScore;
+	}
+
+	/**
+	 * @param rootScore the rootScore to set
+	 */
+	public void setRootScore(Score rootScore) {
+		this.rootScore = rootScore;
+	}	
 }

@@ -10,7 +10,6 @@ import exceptions.PLayerNotFoundException;
 public class Scene {
 	
 	private Player firstPlayer;
-	private Score rootScore;
 	private Category firstCategory;
 	private Player player;
 	
@@ -18,7 +17,9 @@ public class Scene {
 	/** Class Builder 
 	 */
 	public Scene() {
-	
+	firstPlayer=null;
+	firstCategory=null;
+	player=null;
 	}
 	
 	public void checkKey() {
@@ -51,11 +52,6 @@ public class Scene {
 		b.close();
 	}
 	
-
-	/*
-	 * intenta agregar un nuevo jugador, en orden segun el nombre
-	 * crea al jugador cuando lo va a agregar
-	 */
 	/** Tries to add a new player to the linked list.
 	 * @param name creates a new player -added this player if it's possible- <Pre/>name!=null && name can't be repeated.
 	 */
@@ -122,26 +118,10 @@ public class Scene {
 		
 	}
 	
-	public void addScore(Score r) {
-		if(rootScore==null) 
-			rootScore=r;
-		else 
-			addScore(r,this.rootScore);
-	}
 	
-	public void addScore(Score r, Score root) {
-		if(r.getCurrentTime()>root.getCurrentTime()) {
-			if(root.getLeft()==null) 
-				root.setLeft(r);
-			 else
-				addScore(r,root.getLeft());
-		} else
-			if(root.getRight()==null)
-				root.setRight(r);
-			else
-				addScore(r,root.getRight());
-	}
-	
+	/** Adds an category to the linked list of categories.
+	 * @param c -the category that is going to be added- <Pre:/> c!=null.
+	 */
 	public void addCategory(Category c) {
 		if(firstCategory==null) {
 			firstCategory=c;
@@ -150,6 +130,12 @@ public class Scene {
 			addCategory(c,this.firstCategory);
 		}
 	}
+	
+	
+	/** Adds an category to the linked list of categories.
+	 * @param c -the category that is going to be added- <Pre:/> c!=null.
+	 * @param reference -the node use to reference the position in the three- <Pre:/> reference!=null.
+	 */
 	public void addCategory(Category c,Category reference) {
 		if(reference.getNext()==null) {
 			reference.setNext(c);
@@ -158,34 +144,46 @@ public class Scene {
 		else
 			addCategory(c,reference.getNext());
 	}
-	
+
+	/**
+	 * @return the firstPlayer
+	 */
 	public Player getFirstPlayer() {
 		return firstPlayer;
 	}
+
+	/**
+	 * @param firstPlayer the firstPlayer to set
+	 */
 	public void setFirstPlayer(Player firstPlayer) {
 		this.firstPlayer = firstPlayer;
 	}
-	public Score getRootScore() {
-		return rootScore;
-	}
-	public void setRootScore(Score rootScore) {
-		this.rootScore = rootScore;
-	}
 
+	/**
+	 * @return the firstCategory
+	 */
 	public Category getFirstCategory() {
 		return firstCategory;
 	}
+
+	/**
+	 * @param firstCategory the firstCategory to set
+	 */
 	public void setFirstCategory(Category firstCategory) {
 		this.firstCategory = firstCategory;
 	}
 
+	/**
+	 * @return the player
+	 */
 	public Player getPlayer() {
 		return player;
 	}
 
+	/**
+	 * @param player the player to set
+	 */
 	public void setPlayer(Player player) {
 		this.player = player;
 	}
-	
-
 }
