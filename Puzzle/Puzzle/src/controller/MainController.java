@@ -41,7 +41,6 @@ private Scene puzzle;
 	
 	public void newLevel() {
 		puzzle.setFirstCategory(new Category("caricatura"));
-//		puzzle.getFirstCategory().createLevel();
 	}
 	
 	//
