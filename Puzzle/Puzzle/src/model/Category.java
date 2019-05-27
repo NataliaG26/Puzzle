@@ -3,13 +3,14 @@ package model;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class Category {
 	
-	public final static String pathNames ="../Puzzle/Puzzle/DataLevels/categoryNames.txt";
-	public final static String cAnimals="../Puzzle/Puzzle/DataLevels/Animals.txt";
-	public final static String cPaisajes="../Puzzle/Puzzle/DataLevels/Paisajes.txt";
-	public final static String cCaricaturas="../Puzzle/Puzzle/DataLevels/Caricaturas.txt";
+	public final static String pathNames ="./Puzzle/Puzzle/DataLevels/categoryNames.txt";
+	public final static String cAnimals="./Puzzle/Puzzle/DataLevels/Animales.txt";
+	public final static String cPaisajes="./Puzzle/Puzzle/DataLevels/Paisajes.txt";
+	public final static String cCaricaturas="./Puzzle/Puzzle/DataLevels/Caricaturas.txt";
 	private Level firstLevel;
 	private String name;
 	private String[] images;
@@ -36,14 +37,17 @@ public class Category {
 	 * @throws IOException
 	 */
 	public void loadLevelslevels() throws NumberFormatException, IOException {
-		String r;
-		if(this.getName().equals("Animales"))
+		String r = null;
+		if(this.getName().equals("Animales")) {
 			r=Category.cAnimals;
-		else if(this.getName().equals("Caricaturas"))
+		}
+		else if(this.getName().equals("Caricaturas")) {
 			r=Category.cCaricaturas;
-		else
+		}
+		else if(this.getName().equals("Paisajes")) {
 			r=Category.cPaisajes;
-
+		}
+		
 		BufferedReader b = new BufferedReader(new FileReader(r));
 		String line;
 		while((line=b.readLine())!=null) {	
@@ -78,6 +82,27 @@ public class Category {
 		else
 			addLevel(l,r.getNext());	
 	}
+	
+	/** Creates an ArrayList of categories
+	 * @param list -a list that contains the fisrt category- </pre> list!=null.
+	 * @return An ArrayList with all the categories.
+	 */
+	public ArrayList<Category> categoriesExistens(ArrayList<Category> list){
+		list.add(this);
+		if(next != null) {
+			list = next.categoriesExistens(list);
+		}
+		return list;
+	}
+	
+	public ArrayList<Level> getLevels(){
+		ArrayList<Level> list = new ArrayList<Level>();
+		if(firstLevel != null) {
+			list = firstLevel.levelsExistans(list);
+		}
+		return list;
+	}
+	
 	
 	public void loadPuzzle() {
 		firstLevel.loadSections();

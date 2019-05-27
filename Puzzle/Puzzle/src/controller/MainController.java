@@ -31,6 +31,11 @@ private Scene puzzle;
 		return list;
 	}
 	
+	public ArrayList<Category> getsCategories(){
+		ArrayList<Category> list = puzzle.getCategories();
+		return list;
+	}
+	
 	public void selectedPlayer(String name) {
 		if(name !=null) {
     		puzzle.selectedPlayer(name);

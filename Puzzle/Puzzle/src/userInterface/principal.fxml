@@ -9,7 +9,7 @@
    <children>
       <Button layoutX="157.0" layoutY="258.0" mnemonicParsing="false" onAction="#play" text="Jugar" />
       <Button layoutX="334.0" layoutY="258.0" mnemonicParsing="false" onAction="#bestSocres" text="Mejores Puntajes" />
-      <ImageView fitHeight="100.0" fitWidth="600.0" layoutX="9.0" layoutY="9.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="100.0" fitWidth="600.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../ImagesInterface/Puzzle.png" />
          </image>

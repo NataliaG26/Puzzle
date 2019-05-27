@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import exceptions.PLayerNotFoundException;
+import threads.PuzzleLoaderThread;
 
 public class Scene {
 	
@@ -17,9 +18,14 @@ public class Scene {
 	/** Class Builder 
 	 */
 	public Scene() {
+	try {
 	firstPlayer=null;
 	firstCategory=null;
 	player=null;
+	PuzzleLoaderThread r = new PuzzleLoaderThread(this);
+	r.start();
+	} catch (IOException e) {
+	}
 	}
 	
 	public void checkKey() {
@@ -47,7 +53,9 @@ public class Scene {
 		BufferedReader b = new BufferedReader(new FileReader(Category.pathNames));
 		String line;
 		while((line=b.readLine())!=null) {	
-			this.addCategory(new Category(line));
+			Category w = new Category(line);
+			w.loadLevelslevels();
+			this.addCategory(w);
 		}
 		b.close();
 	}
@@ -144,6 +152,15 @@ public class Scene {
 		else
 			addCategory(c,reference.getNext());
 	}
+	
+	public ArrayList<Category> getCategories(){
+		ArrayList<Category> list = new ArrayList<Category>();
+		if(firstCategory != null) {
+			list = firstCategory.categoriesExistens(list);
+		}
+		return list;
+	}
+	
 
 	/**
 	 * @return the firstPlayer

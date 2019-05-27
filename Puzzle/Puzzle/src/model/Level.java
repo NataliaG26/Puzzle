@@ -1,5 +1,7 @@
 package model;
 
+import java.util.ArrayList;
+
 /** 
  * @author Natalia Gonzales & Duvan Cuero
  */
@@ -50,6 +52,13 @@ public class Level {
 		}
 		puzzle[puzzle.length-1][puzzle.length-1] = null;
 		
+	}
+	public ArrayList<Level> levelsExistans(ArrayList<Level> list){
+		list.add(this);
+		if(next != null) {
+			list = next.levelsExistans(list);
+		}
+		return list;
 	}
 
 	/**

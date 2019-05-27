@@ -8,7 +8,7 @@
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ScoresPlayersController">
    <children>
       <Button layoutX="79.0" layoutY="188.0" mnemonicParsing="false" onAction="#goToPrincipal" text="Anterior" />
-      <ImageView fitHeight="100.0" fitWidth="600.0" layoutX="9.0" layoutY="9.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="100.0" fitWidth="600.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../ImagesInterface/Puzzle.png" />
          </image>

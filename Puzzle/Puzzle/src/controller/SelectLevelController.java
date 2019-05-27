@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -11,16 +13,23 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ListView;
+import javafx.scene.control.cell.ComboBoxListCell;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
+import model.Category;
 
 public class SelectLevelController implements Initializable{
 	
-private MainController mainController;
+	private MainController mainController;
 	
+	public SelectLevelController() {
+	}
 	
-	public void paintLevels() {
-		
+	@FXML
+	private ListView<Category> levelsTable;
+	
+	public void paintLevels() {	
 	}
 	
 	
@@ -43,9 +52,6 @@ private MainController mainController;
 	 }
 	
 	
-	public SelectLevelController() {
-		// TODO Auto-generated constructor stub
-	}
 	
 	public void setMainController(MainController mainController) {
 		this.mainController = mainController;
@@ -53,7 +59,29 @@ private MainController mainController;
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		// TODO Auto-generated method stub
+		mainController = new MainController();
+		level(null);
 		SelectLevelController gC = new SelectLevelController();
+		loadLevels(null);
+	}
+	
+	public void loadLevels(ActionEvent event) {
+
+		ObservableList names = FXCollections.observableArrayList();
+		ObservableList data = FXCollections.observableArrayList();
+		  
+	        levelsTable.setEditable(true);
+	        
+	        for(int i=0;i<mainController.getsCategories().size();i++) {
+	        	String rn ;
+	        	data.add(mainController.getsCategories().get(i).getName());
+	        	mainController.getsCategories().get(i).getLevels();
+	        }
+	       
+	        names.add("anonym");
+	        
+	          
+	        levelsTable.setItems(data);
+	        levelsTable.setCellFactory(ComboBoxListCell.forListView(names)); 
 	}
 }
