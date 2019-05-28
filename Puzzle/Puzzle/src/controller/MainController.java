@@ -4,6 +4,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import exceptions.LevelNotSelectedException;
+import exceptions.PlayerNotSelectedException;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import model.Category;
@@ -23,6 +25,22 @@ private Scene puzzle;
 		puzzle.addPlayer(name);
 	}
 	
+	
+	public ArrayList<String> getCategoriesNames(){
+		ArrayList<String> list = puzzle.getCategories();
+		return list;
+	}
+	
+	public ArrayList<String> getLevelsCategory(String nameCategory){
+		System.out.println("main");
+		ArrayList<String> list = puzzle.getLevelsCategory(nameCategory);
+		return list;
+	}
+	
+	public void loadCategories() {
+		puzzle.loadCategorys();
+	}
+	
 	/*
 	 * dar un arraylist con los nombres de los jugadores
 	 */
@@ -31,43 +49,34 @@ private Scene puzzle;
 		return list;
 	}
 	
-	public ArrayList<Category> getsCategories(){
-		ArrayList<Category> list = puzzle.getCategories();
-		return list;
-	}
-	
-	public void selectedPlayer(String name) {
+	public void selectedPlayer(String name) throws PlayerNotSelectedException {
 		if(name !=null) {
     		puzzle.selectedPlayer(name);
     	}else {
-    		//lanzarException crear exception
+    		throw new PlayerNotSelectedException();
     	}
 	}
 	
-	public void newLevel() {
-		puzzle.setFirstCategory(new Category("caricatura"));
+	public void loadGame(String levelName, String category) throws LevelNotSelectedException {
+		if(levelName != "" && levelName != null) {
+			loadGame(levelName, category);
+		}else {
+			throw new LevelNotSelectedException("");
+		}
 	}
 	
-	//
 	public String getImage() {
-		String image = puzzle.getFirstCategory().getFirstLevel().getImage();
+		String image = puzzle.getImage();
 		return image;
 	}
 	
 	public void loadLevel(int width, int hight) {
-		puzzle.getFirstCategory().getFirstLevel().setWidth(width);
-		puzzle.getFirstCategory().getFirstLevel().setHight(hight);
-		puzzle.getFirstCategory().loadPuzzle();
+		puzzle.loadPuzzle(width, hight);
 	}
 	
 	public int[] dimentions(int r, int c) {
-		int[] dim = new int[5];
-		dim[0] = puzzle.getFirstCategory().getFirstLevel().getPuzzle()[r][c].getStartWidth();
-		dim[1] = puzzle.getFirstCategory().getFirstLevel().getPuzzle()[r][c].getStartHight();
-		dim[2] = puzzle.getFirstCategory().getFirstLevel().getPuzzle()[r][c].getWidth();
-		dim[3] = puzzle.getFirstCategory().getFirstLevel().getPuzzle()[r][c].getHight();
-		dim[4] = puzzle.getFirstCategory().getFirstLevel().getPuzzle()[r][c].getId();
-		return dim;
+		int[] inf = puzzle.getInfoSection(r, c);
+		return inf;
 	}
 	
 	

@@ -4,6 +4,10 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import javax.swing.JOptionPane;
+
+import exceptions.PLayerNotFoundException;
+import exceptions.PlayerNotSelectedException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -42,9 +46,9 @@ private MainController mainController;
     	
     }
     
-    public void selectPlayer() {
+    public void selectPlayer() throws PlayerNotSelectedException {
     	String name = listView.getSelectionModel().getSelectedItem();
-    		mainController.selectedPlayer(name);
+    	mainController.selectedPlayer(name);
 
     }
     
@@ -53,7 +57,7 @@ private MainController mainController;
      * play boton nueva ventana
      */
 	 @FXML
-	 void play(ActionEvent event) {
+	 void play(ActionEvent event) throws PlayerNotSelectedException {
 		 selectPlayer();
 	    try {
 	    	FXMLLoader loader = new FXMLLoader(getClass().getResource("../userInterface/selectLevel.fxml"));
@@ -66,7 +70,6 @@ private MainController mainController;
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-	    	mainController.newLevel();
 	 }
 
 	/*

@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import exceptions.LevelNotUnlockedException;
 import exceptions.PLayerNotFoundException;
 import threads.PuzzleLoaderThread;
 
@@ -18,23 +19,55 @@ public class Scene {
 	/** Class Builder 
 	 */
 	public Scene() {
-	try {
-	firstPlayer=null;
-	firstCategory=null;
-	player=null;
-	PuzzleLoaderThread r = new PuzzleLoaderThread(this);
-	r.start();
-	} catch (IOException e) {
-	}
+	
 	}
 	
-	public void checkKey() {
+	public void changeFlag(String levelName, String categoryName) {
+		firstCategory.changeFlag(levelName, categoryName);
 	}
 	
+	public boolean checkKey(String levelName, String category) {
+		String key = searchLevelKey(levelName, category);
+		return (player.getKeys().contains(key));
+	}
+	
+	public String searchLevelKey(String levelName, String category) {
+		return firstCategory.searchLevelKey(levelName, category);
+	}
+	/*
 	public void createLevel() {
-		
+		firstCategory.loadLevel();
+	}*/
+	
+	public void addKey() {
+		if(player.getKeys().size()==0) {
+			player.setKeys(firstKeys());
+		}
 	}
-
+	
+	public int[] getInfoSection(int r, int c) {
+		int[] inf = firstCategory.getInfoSection(r, c);
+		return inf;
+	}
+	
+	public void loadPuzzle(int width, int hight) {
+		firstCategory.loadPuzzle(width, hight);
+	}
+	
+	
+	public String getImage(){
+		String  image = firstCategory.searchImageFlag();
+		return image;
+	}
+	
+	public ArrayList<String> firstKeys() {
+		ArrayList<String> keys = new ArrayList<String>();
+		if(firstCategory!= null) {
+			keys = firstCategory.firstKeys(keys);
+		}
+		return keys;
+	}
+	
 	/** This method returns a list of the players name
 	 * @return an ArrayList with the players names. 
 	 */
@@ -49,15 +82,33 @@ public class Scene {
 	/** Loads the categories of the game from a file.
 	 * @throws IOException
 	 */
-	public void loadCategorys() throws IOException {
-		BufferedReader b = new BufferedReader(new FileReader(Category.pathNames));
-		String line;
-		while((line=b.readLine())!=null) {	
-			Category w = new Category(line);
-			w.loadLevelslevels();
-			this.addCategory(w);
+	public void loadCategorys() {
+		BufferedReader b;
+		try {
+			b = new BufferedReader(new FileReader(Category.pathNames));
+			String line;
+			while((line=b.readLine())!=null) {	
+				Category w = new Category(line);
+				w.loadLevelslevels();
+				this.addCategory(w);
+			}
+			b.close();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		b.close();
+	}
+	
+	/*
+	 * 
+	 */
+	public void loadGame(String levelName, String categoryName) throws LevelNotUnlockedException {
+		if(checkKey(levelName, categoryName)) {
+			changeFlag(levelName, categoryName);
+		}else {
+			throw new LevelNotUnlockedException();
+		}
+		
 	}
 	
 	/** Tries to add a new player to the linked list.
@@ -83,7 +134,9 @@ public class Scene {
 	 */
 	public void selectedPlayer(String name) {
 		player = searchPlayer(name);
+		loadCategorys();
 	}
+	
 	
 
 	/** Search in the linked list the selected player of the interface.
@@ -153,13 +206,34 @@ public class Scene {
 			addCategory(c,reference.getNext());
 	}
 	
-	public ArrayList<Category> getCategories(){
-		ArrayList<Category> list = new ArrayList<Category>();
+	/*
+	 * 
+	 */
+	
+	public Category searchCategory(String name) {
+		Category cat = null;
+		if(firstCategory != null) {
+			cat = firstCategory.getCategory(name);
+		}
+		return cat;
+	}
+	public ArrayList<String> getCategories(){
+		ArrayList<String> list = new ArrayList<String>();
 		if(firstCategory != null) {
 			list = firstCategory.categoriesExistens(list);
 		}
 		return list;
 	}
+	
+	public ArrayList<String> getLevelsCategory(String nameCategory){
+		ArrayList<String> list = new ArrayList<String>();
+		if(firstCategory != null) {
+			list = firstCategory.getLevels(nameCategory);
+			System.out.println("scene");
+		}
+		return list;
+	}
+	
 	
 
 	/**

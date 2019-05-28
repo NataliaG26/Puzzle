@@ -7,10 +7,10 @@ import java.util.ArrayList;
 
 public class Category {
 	
-	public final static String pathNames ="./Puzzle/Puzzle/DataLevels/categoryNames.txt";
-	public final static String cAnimals="./Puzzle/Puzzle/DataLevels/Animales.txt";
-	public final static String cPaisajes="./Puzzle/Puzzle/DataLevels/Paisajes.txt";
-	public final static String cCaricaturas="./Puzzle/Puzzle/DataLevels/Caricaturas.txt";
+	public final static String pathNames ="./DataLevels/CategoryNames.txt";
+	public final static String cAnimals="./DataLevels/Animales.txt";
+	public final static String cPaisajes="./DataLevels/Paisajes.txt";
+	public final static String cCaricaturas="./DataLevels/Caricaturas.txt";
 	private Level firstLevel;
 	private String name;
 	private String[] images;
@@ -27,9 +27,54 @@ public class Category {
 	public Category(String name) {
 		this.name = name;
 		this.addLevel(level);
-		next=null;
-		prev=null;
-		firstLevel=null;
+	}
+	
+	public ArrayList<String> firstKeys(ArrayList<String> keys){
+		keys.add(firstLevel.getKey());
+		if(next!= null) {
+			next.firstKeys(keys);
+		}
+		return keys;
+	}
+	
+	
+	
+	public String searchLevelKey(String levelName, String category) {
+		String key = "";
+		if(this.name.equals(category)) {
+			key = firstLevel.searchKey(levelName);
+		}else {
+			key = next.searchLevelKey(levelName, category);
+		}
+		return key;
+	}
+	
+	public void changeFlag(String levelName, String categoryName) {
+		if(this.name.equals(categoryName)) {
+		firstLevel.changeFlag(levelName);
+		flag = true;
+		}else {
+			next.changeFlag(levelName, categoryName);
+		}
+	}
+	
+	public int[] getInfoSection(int r, int c) {
+		if(flag) {
+			return firstLevel.getInfoSection( r, c);
+		}else {
+			return next.getInfoSection(r, c);
+		}
+	}
+		
+	
+	public String searchImageFlag() {
+		String image = "";
+		if(this.flag) {
+			image = firstLevel.searchFlag();
+		}else {
+			image = next.searchImageFlag();
+		}
+		return image;
 	}
 	
 	/** Loads the levels of the category type.
@@ -53,6 +98,7 @@ public class Category {
 		while((line=b.readLine())!=null) {	
 			String [] reader = line.split(",");
 			this.addLevel(new Level(reader[0],reader[1],reader[2],Integer.parseInt(reader[3])));
+			System.out.println("animales while");
 			
 		}
 		b.close();
@@ -78,6 +124,7 @@ public class Category {
 		if(r.getNext()==null) {
 			r.setNext(l);
 			l.setPrev(l);
+			System.out.println("animales add");
 		}	
 		else
 			addLevel(l,r.getNext());	
@@ -87,26 +134,51 @@ public class Category {
 	 * @param list -a list that contains the fisrt category- </pre> list!=null.
 	 * @return An ArrayList with all the categories.
 	 */
-	public ArrayList<Category> categoriesExistens(ArrayList<Category> list){
-		list.add(this);
+	public ArrayList<String> categoriesExistens(ArrayList<String> list){
+		list.add(this.name);
 		if(next != null) {
 			list = next.categoriesExistens(list);
 		}
 		return list;
 	}
 	
-	public ArrayList<Level> getLevels(){
-		ArrayList<Level> list = new ArrayList<Level>();
-		if(firstLevel != null) {
+	public void loadPuzzle(int width, int hight) {
+		if(this.flag) {
+			firstLevel.loadLevel(width, hight);
+		}else {
+			next.loadPuzzle(width, hight);
+		}
+	}
+	
+	
+	
+	public ArrayList<String> getLevels(String nameCategory){
+		ArrayList<String> list = new ArrayList<String>();
+		System.out.println(this.name);
+		System.out.println("Caricaturas".compareTo(this.name));
+		System.out.println(this.name.equalsIgnoreCase(nameCategory));
+		System.out.println(this.next==null);
+		if(this.name.equalsIgnoreCase(nameCategory)) {
 			list = firstLevel.levelsExistans(list);
+			System.out.println("cat");
+		}else if(this.next != null){
+			list = this.next.getLevels(nameCategory);
+			System.out.println("cat2");
 		}
 		return list;
 	}
 	
 	
-	public void loadPuzzle() {
-		firstLevel.loadSections();
+	public Category getCategory(String name) {
+		Category cat = null;
+		if(name.equals(this.name)) {
+			cat=  this;
+		}else {
+			cat = next.getCategory(name);
+		}
+		return cat;
 	}
+	
 
 	/**
 	 * @return the firstLevel

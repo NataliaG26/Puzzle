@@ -22,6 +22,16 @@ public class Section {
 		this.setHight(hight);
 		this.id = id;
 	}
+	
+	public int[] getInformation(){
+		int[] dim = new int[5];
+		dim[0] = getStartWidth();
+		dim[1] = getStartHight();
+		dim[2] = getWidth();
+		dim[3] = getHight();
+		dim[4] = getId();
+		return dim;
+	}
 
 	/**
 	 * @return the startWidth

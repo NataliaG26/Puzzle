@@ -34,10 +34,45 @@ public class Level {
 		prev=null;
 		next=null;
 	}
+	
+	public String searchKey(String levelName) {
+		String k = "";
+		if(this.name.equals(levelName)) {
+			k= this.key;
+		}else if(next != null) {
+			k= next.searchKey(levelName);
+		}
+		return k;
+	}
+	
+	public void changeFlag(String name) {
+		if(this.name.equals(name)) {
+			flag = true;
+		}else {
+			next.changeFlag(name);
+		}
+	}
 
+	public void loadLevel(int width,int hight) {
+		if(this.flag) {
+			loadSections(width, hight);
+		}else {
+			next.loadLevel( width, hight);
+		}
+		
+	}
+	
+	public String searchFlag() {
+		if(flag) {
+			return image;
+		}else {
+			return next.searchFlag();
+		}
+	}
+	
 	/** Loads all the sections of the level in an matrix.
 	 */
-	public void loadSections() {
+	public void loadSections(int width,int hight) {
 		int sw = 0;
 		int sh = 0;
 		int w = width/puzzle.length;
@@ -53,12 +88,20 @@ public class Level {
 		puzzle[puzzle.length-1][puzzle.length-1] = null;
 		
 	}
-	public ArrayList<Level> levelsExistans(ArrayList<Level> list){
-		list.add(this);
+	public ArrayList<String> levelsExistans(ArrayList<String> list){
+		list.add(this.name);
 		if(next != null) {
 			list = next.levelsExistans(list);
 		}
 		return list;
+	}
+	public int [] getInfoSection(int r, int c) {
+		if(flag) {
+			return puzzle[r][c].getInformation();
+		}else {
+			return next.getInfoSection(r, c);
+					
+		}
 	}
 
 	/**

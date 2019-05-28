@@ -34,15 +34,13 @@ public class GameController implements Initializable, EventHandler<KeyEvent>{
 
 	@FXML
 	void pausa(ActionEvent event) {
-		mainController.newLevel();//controllerselectlevel
+		//mainController.newLevel();//controllerselectlevel
 		Image img = new Image(mainController.getImage());
 		int width = (int)img.getWidth();
 		int hight = (int)img.getHeight();
 		mainController.loadLevel(width, hight);
 		createGridPane(3);
 		load(3);
-		
-		
 	}
 	
 	public void moveDown() {
