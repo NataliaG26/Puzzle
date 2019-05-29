@@ -18,54 +18,10 @@ public class Scene {
 	
 	/** Class Builder 
 	 */
-	public Scene() {
+	public Scene() {}
 	
-	}
-	
-	public void changeFlag(String levelName, String categoryName) {
-		firstCategory.changeFlag(levelName, categoryName);
-	}
-	
-	public boolean checkKey(String levelName, String category) {
-		String key = searchLevelKey(levelName, category);
-		return (player.getKeys().contains(key));
-	}
-	
-	public String searchLevelKey(String levelName, String category) {
-		return firstCategory.searchLevelKey(levelName, category);
-	}
-	/*
-	public void createLevel() {
-		firstCategory.loadLevel();
-	}*/
-	
-	public void addKey() {
-		if(player.getKeys().size()==0) {
-			player.setKeys(firstKeys());
-		}
-	}
-	
-	public int[] getInfoSection(int r, int c) {
-		int[] inf = firstCategory.getInfoSection(r, c);
-		return inf;
-	}
-	
-	public void loadPuzzle(int width, int hight) {
-		firstCategory.loadPuzzle(width, hight);
-	}
-	
-	
-	public String getImage(){
-		String  image = firstCategory.searchImageFlag();
-		return image;
-	}
-	
-	public ArrayList<String> firstKeys() {
-		ArrayList<String> keys = new ArrayList<String>();
-		if(firstCategory!= null) {
-			keys = firstCategory.firstKeys(keys);
-		}
-		return keys;
+	public void selectedLevel(String nameLevel) {
+		firstCategory.selectedLevel(nameLevel);
 	}
 	
 	/** This method returns a list of the players name
@@ -77,6 +33,10 @@ public class Scene {
 			list = firstPlayer.playersName(list);
 		}
 		return list;
+	}
+	
+	public void resetLevels() {
+		firstCategory.resetLevels();
 	}
 	
 	/** Loads the categories of the game from a file.
@@ -97,18 +57,6 @@ public class Scene {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
-	
-	/*
-	 * 
-	 */
-	public void loadGame(String levelName, String categoryName) throws LevelNotUnlockedException {
-		if(checkKey(levelName, categoryName)) {
-			changeFlag(levelName, categoryName);
-		}else {
-			throw new LevelNotUnlockedException();
-		}
-		
 	}
 	
 	/** Tries to add a new player to the linked list.
@@ -136,9 +84,37 @@ public class Scene {
 		player = searchPlayer(name);
 		loadCategorys();
 	}
-	
-	
 
+	public void levelSelected(String nameLevel) {
+		firstCategory.selectedLevel(nameLevel);
+	}
+	
+	public int loadImage(int width, int hight) {
+		return currentCategory().currentLevel().loadImage(width, hight);
+	}
+	
+	public String getImage() {
+		return currentCategory().currentLevel().getImage();
+	}
+	
+	public int[] getDimentions(int row, int column) {
+		currentCategory().currentLevel().loadSections();
+		return currentCategory().currentLevel().getInfoSection(row, column);
+	}
+	
+	public Category currentCategory() {
+		Category current = firstCategory;
+		boolean find = false;
+		while(!find) {
+			if(current.getFlag()) {
+				find = true;
+			}else {
+				current = current.getNext();
+			}
+		}
+		return current;
+	}
+	
 	/** Search in the linked list the selected player of the interface.
 	 * @param name -the name that is going to be searched- <Pre/>name!=null
 	 * @throws PlayerNotFoundException if the player is not found.
@@ -179,7 +155,6 @@ public class Scene {
 		
 	}
 	
-	
 	/** Adds an category to the linked list of categories.
 	 * @param c -the category that is going to be added- <Pre:/> c!=null.
 	 */
@@ -188,35 +163,23 @@ public class Scene {
 			firstCategory=c;
 		} 
 		else {
-			addCategory(c,this.firstCategory);
+			firstCategory.addCategory(c);
 		}
 	}
-	
-	
-	/** Adds an category to the linked list of categories.
-	 * @param c -the category that is going to be added- <Pre:/> c!=null.
-	 * @param reference -the node use to reference the position in the three- <Pre:/> reference!=null.
-	 */
-	public void addCategory(Category c,Category reference) {
-		if(reference.getNext()==null) {
-			reference.setNext(c);
-			c.setPrev(reference);
-		} 
-		else
-			addCategory(c,reference.getNext());
-	}
-	
-	/*
-	 * 
-	 */
 	
 	public Category searchCategory(String name) {
-		Category cat = null;
-		if(firstCategory != null) {
-			cat = firstCategory.getCategory(name);
+		Category act = firstCategory;
+		boolean find = false;
+		while(!find) {
+			if(act.getName().equals(name)) {
+				find = true;
+			}else {
+			act = act.getNext();
+			}
 		}
-		return cat;
+		return act;
 	}
+	
 	public ArrayList<String> getCategories(){
 		ArrayList<String> list = new ArrayList<String>();
 		if(firstCategory != null) {
@@ -226,51 +189,39 @@ public class Scene {
 	}
 	
 	public ArrayList<String> getLevelsCategory(String nameCategory){
-		ArrayList<String> list = new ArrayList<String>();
-		if(firstCategory != null) {
-			list = firstCategory.getLevels(nameCategory);
-			System.out.println("scene");
-		}
-		return list;
+		return searchCategory(nameCategory).getLevelsName();
 	}
 	
-	
-
 	/**
 	 * @return the firstPlayer
 	 */
 	public Player getFirstPlayer() {
 		return firstPlayer;
 	}
-
 	/**
 	 * @param firstPlayer the firstPlayer to set
 	 */
 	public void setFirstPlayer(Player firstPlayer) {
 		this.firstPlayer = firstPlayer;
 	}
-
 	/**
 	 * @return the firstCategory
 	 */
 	public Category getFirstCategory() {
 		return firstCategory;
 	}
-
 	/**
 	 * @param firstCategory the firstCategory to set
 	 */
 	public void setFirstCategory(Category firstCategory) {
 		this.firstCategory = firstCategory;
 	}
-
 	/**
 	 * @return the player
 	 */
 	public Player getPlayer() {
 		return player;
 	}
-
 	/**
 	 * @param player the player to set
 	 */

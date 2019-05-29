@@ -7,7 +7,6 @@ public class Player implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	private String name;
-	private Score score;
 	private Player left;
 	private Player right;
 	private Boolean flag;
@@ -106,91 +105,66 @@ public class Player implements Serializable{
 	public String getName() {
 		return name;
 	}
-
 	/**
 	 * @param name the name to set
 	 */
 	public void setName(String name) {
 		this.name = name;
 	}
-
-	/**
-	 * @return the score
-	 */
-	public Score getScore() {
-		return score;
-	}
-
-	/**
-	 * @param score the score to set
-	 */
-	public void setScore(Score score) {
-		this.score = score;
-	}
-
 	/**
 	 * @return the left
 	 */
 	public Player getLeft() {
 		return left;
 	}
-
 	/**
 	 * @param left the left to set
 	 */
 	public void setLeft(Player left) {
 		this.left = left;
 	}
-
 	/**
 	 * @return the right
 	 */
 	public Player getRight() {
 		return right;
 	}
-
 	/**
 	 * @param right the right to set
 	 */
 	public void setRight(Player right) {
 		this.right = right;
 	}
-
 	/**
 	 * @return the flag
 	 */
 	public Boolean getFlag() {
 		return flag;
 	}
-
 	/**
 	 * @param flag the flag to set
 	 */
 	public void setFlag(Boolean flag) {
 		this.flag = flag;
 	}
-
 	/**
 	 * @return the keys
 	 */
 	public ArrayList<String> getKeys() {
 		return keys;
 	}
-
 	/**
 	 * @param keys the keys to set
 	 */
 	public void setKeys(ArrayList<String> keys) {
 		this.keys = keys;
 	}
-
 	/**
 	 * @return the rootScore
 	 */
 	public Score getRootScore() {
 		return rootScore;
 	}
-
 	/**
 	 * @param rootScore the rootScore to set
 	 */

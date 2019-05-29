@@ -2,6 +2,7 @@ package controller;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import exceptions.LevelNotSelectedException;
@@ -32,11 +33,10 @@ public class SelectLevelController implements Initializable{
 	@FXML
 	private ListView<String> listView;
 	
-	public SelectLevelController() {
-	}
+	public SelectLevelController() {}
 	
 	 @FXML
-	 void start(ActionEvent event) throws LevelNotSelectedException {
+	 public void start(ActionEvent event) throws LevelNotSelectedException {
 		 loadGame();
 		 try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("../userInterface/game.fxml"));
@@ -55,31 +55,34 @@ public class SelectLevelController implements Initializable{
 	 }
 	
 	 public void loadGame() throws LevelNotSelectedException {
-		 mainController.loadGame(listView.getSelectionModel().getSelectedItem(), comboBox.getValue());
+		 String nameLevel = listView.getSelectionModel().getSelectedItem();
+		 mainController.levelSelected(nameLevel);
 	 }
 	 
 	public void loadLevels(ActionEvent event)  {
 		listVewload();
+	}
+
+	public void listVewload() {
+		String categoryName = comboBox.getValue();
+		ArrayList<String> levelList = mainController.getLevelNames(categoryName);
+		ObservableList<String> list = FXCollections.observableArrayList(levelList);
+		System.out.println(comboBox.getValue());
+    	listView.setItems(list);
+	}
+	
+	public void loadChoiceBox() {
+		ArrayList<String> categoryNames = mainController.getCategoryNames();
+		ObservableList<String> data = FXCollections.observableArrayList(categoryNames);
+		comboBox.setItems(data);     
 	}
 	
 	public void setMainController(MainController mainController) {
 		this.mainController = mainController;
 		loadChoiceBox();
 	}
-	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		SelectLevelController gC = new SelectLevelController();
-	}
-	
-	public void listVewload() {
-		ObservableList<String> list = FXCollections.observableArrayList(mainController.getLevelsCategory(comboBox.getValue()));
-		System.out.println(comboBox.getValue());
-    	listView.setItems(list);
-	}
-	
-	public void loadChoiceBox() {
-		ObservableList<String> data = FXCollections.observableArrayList(mainController.getCategoriesNames());
-		comboBox.setItems(data);     
 	}
 }

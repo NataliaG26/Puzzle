@@ -32,26 +32,19 @@ private MainController mainController;
 
     @FXML
     void addPlayer(ActionEvent event) {
-    	//controlar exception, mostrar mensaje "debe usar otro nombre"
-    	if(!txtNewPlayer.getText().equals("")) {
-    		mainController.addPlayer(txtNewPlayer.getText());
-    	}
+    	mainController.addPlayer(txtNewPlayer.getText());
     	actualizeListView();
-    	
     }
-    
+  
     public void actualizeListView() {
     	ObservableList<String> list = FXCollections.observableArrayList(mainController.getPlayersName());
     	listView.setItems(list);
-    	
     }
     
     public void selectPlayer() throws PlayerNotSelectedException {
     	String name = listView.getSelectionModel().getSelectedItem();
     	mainController.selectedPlayer(name);
-
     }
-    
     
     /*
      * play boton nueva ventana

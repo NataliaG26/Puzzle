@@ -15,10 +15,8 @@ public class Level {
 	private int difficulty;
 	private int width;
 	private int hight;
-	private Boolean flag;
+	private boolean flag;
 	private Section[][] puzzle;
-	
-
 	
 	/** Level builder is the class builder
 	 * @param name -name of the level- <Pre:/> name!=null
@@ -31,52 +29,29 @@ public class Level {
 		this.image = image;
 		this.key = key;
 		this.difficulty = difficulty;
-		prev=null;
-		next=null;
+		puzzle = new Section[difficulty][difficulty];
 	}
 	
-	public String searchKey(String levelName) {
-		String k = "";
-		if(this.name.equals(levelName)) {
-			k= this.key;
-		}else if(next != null) {
-			k= next.searchKey(levelName);
-		}
-		return k;
-	}
-	
-	public void changeFlag(String name) {
-		if(this.name.equals(name)) {
-			flag = true;
-		}else {
-			next.changeFlag(name);
+	public void resetLevels() {
+		this.flag=false;
+		if(next!=null) {
+			next.resetLevels();
 		}
 	}
 
-	public void loadLevel(int width,int hight) {
-		if(this.flag) {
-			loadSections(width, hight);
-		}else {
-			next.loadLevel( width, hight);
-		}
-		
-	}
-	
-	public String searchFlag() {
-		if(flag) {
-			return image;
-		}else {
-			return next.searchFlag();
-		}
+	public int loadImage(int width,int hight) {
+		setWidth(width);
+		setHight(hight);
+		return difficulty;
 	}
 	
 	/** Loads all the sections of the level in an matrix.
 	 */
-	public void loadSections(int width,int hight) {
+	public void loadSections() {
 		int sw = 0;
 		int sh = 0;
-		int w = width/puzzle.length;
-		int h = hight/puzzle.length;
+		int w = width/difficulty;
+		int h = hight/difficulty;
 		for (int i = 0; i < puzzle.length; i++) {
 			for (int j = 0; j < puzzle.length; j++) {
 				puzzle[i][j] = new Section(sw, sh, w, h, (i+j));
@@ -86,8 +61,25 @@ public class Level {
 			sh += h;
 		}
 		puzzle[puzzle.length-1][puzzle.length-1] = null;
-		
 	}
+	
+	public void addLevel(Level level) {
+		if(next == null) {
+			next = level;
+		}else {
+			next.addLevel(level);
+		}
+	}
+	
+	public void selectedLevel(String namelevel) {
+		if(this.name.equals(namelevel)) {
+			this.flag = true;
+		}else {
+			next.selectedLevel(namelevel);
+		}
+	
+	}
+	
 	public ArrayList<String> levelsExistans(ArrayList<String> list){
 		list.add(this.name);
 		if(next != null) {
@@ -95,12 +87,12 @@ public class Level {
 		}
 		return list;
 	}
+	
 	public int [] getInfoSection(int r, int c) {
 		if(flag) {
 			return puzzle[r][c].getInformation();
 		}else {
-			return next.getInfoSection(r, c);
-					
+			return next.getInfoSection(r, c);		
 		}
 	}
 
@@ -110,133 +102,114 @@ public class Level {
 	public Level getNext() {
 		return next;
 	}
-
 	/**
 	 * @param next the next to set
 	 */
 	public void setNext(Level next) {
 		this.next = next;
 	}
-
 	/**
 	 * @return the prev
 	 */
 	public Level getPrev() {
 		return prev;
 	}
-
 	/**
 	 * @param prev the prev to set
 	 */
 	public void setPrev(Level prev) {
 		this.prev = prev;
 	}
-
 	/**
 	 * @return the name
 	 */
 	public String getName() {
 		return name;
 	}
-
 	/**
 	 * @param name the name to set
 	 */
 	public void setName(String name) {
 		this.name = name;
 	}
-
 	/**
 	 * @return the image
 	 */
 	public String getImage() {
 		return image;
 	}
-
 	/**
 	 * @param image the image to set
 	 */
 	public void setImage(String image) {
 		this.image = image;
 	}
-
 	/**
 	 * @return the key
 	 */
 	public String getKey() {
 		return key;
 	}
-
 	/**
 	 * @param key the key to set
 	 */
 	public void setKey(String key) {
 		this.key = key;
 	}
-
 	/**
 	 * @return the difficulty
 	 */
 	public int getDifficulty() {
 		return difficulty;
 	}
-
 	/**
 	 * @param dificulty the difficulty to set
 	 */
 	public void setDifficulty(int difficulty) {
 		this.difficulty = difficulty;
 	}
-
 	/**
 	 * @return the width
 	 */
 	public int getWidth() {
 		return width;
 	}
-
 	/**
 	 * @param width the width to set
 	 */
 	public void setWidth(int width) {
 		this.width = width;
 	}
-
 	/**
 	 * @return the hight
 	 */
 	public int getHight() {
 		return hight;
 	}
-
 	/**
 	 * @param hight the hight to set
 	 */
 	public void setHight(int hight) {
 		this.hight = hight;
 	}
-
 	/**
 	 * @return the flag
 	 */
 	public Boolean getFlag() {
 		return flag;
 	}
-
 	/**
 	 * @param flag the flag to set
 	 */
 	public void setFlag(Boolean flag) {
 		this.flag = flag;
 	}
-
 	/**
 	 * @return the puzzle
 	 */
 	public Section[][] getPuzzle() {
 		return puzzle;
 	}
-
 	/**
 	 * @param puzzle the puzzle to set
 	 */

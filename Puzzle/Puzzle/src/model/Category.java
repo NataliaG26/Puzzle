@@ -13,68 +13,65 @@ public class Category {
 	public final static String cCaricaturas="./DataLevels/Caricaturas.txt";
 	private Level firstLevel;
 	private String name;
-	private String[] images;
 	private Category next;
 	private Category prev;
-	private Level level;
 	private Boolean flag;
-	
-	
 	
 	/** Builder of the class Category.
 	 * @param name
 	 */
 	public Category(String name) {
 		this.name = name;
-		this.addLevel(level);
+		flag = false;
 	}
 	
-	public ArrayList<String> firstKeys(ArrayList<String> keys){
-		keys.add(firstLevel.getKey());
+	
+	//el nombre debe existir en la lista
+	public void selectedLevel(String nameLevel) {
+		if(getLevelsName().contains(nameLevel)) {
+			this.flag = true;
+			firstLevel.selectedLevel(nameLevel);
+		}else {
+			next.selectedLevel(nameLevel);
+		}
+	
+	}
+	
+	
+
+	public void resetLevels() {
+		this.flag = false;
+		this.firstLevel.resetLevels();
 		if(next!= null) {
-			next.firstKeys(keys);
-		}
-		return keys;
-	}
-	
-	
-	
-	public String searchLevelKey(String levelName, String category) {
-		String key = "";
-		if(this.name.equals(category)) {
-			key = firstLevel.searchKey(levelName);
-		}else {
-			key = next.searchLevelKey(levelName, category);
-		}
-		return key;
-	}
-	
-	public void changeFlag(String levelName, String categoryName) {
-		if(this.name.equals(categoryName)) {
-		firstLevel.changeFlag(levelName);
-		flag = true;
-		}else {
-			next.changeFlag(levelName, categoryName);
+			next.resetLevels();
 		}
 	}
 	
-	public int[] getInfoSection(int r, int c) {
-		if(flag) {
-			return firstLevel.getInfoSection( r, c);
+	public void addCategory(Category category) {
+		if(next==null) {
+			next=category;
+			category.prev = this;
 		}else {
-			return next.getInfoSection(r, c);
+			next.addCategory(category);
 		}
 	}
-		
 	
-	public String searchImageFlag() {
-		String image = "";
-		if(this.flag) {
-			image = firstLevel.searchFlag();
-		}else {
-			image = next.searchImageFlag();
+	public Level currentLevel() {
+		Level current = firstLevel;
+		boolean find = false;
+		while(!find) {
+			System.out.println(current.getName());
+			if(current.getFlag()) {
+				find = true;
+			}else {
+				current = current.getNext();
+			}
 		}
-		return image;
+		return current;
+	}
+	
+	public ArrayList<String> getLevelsName(){
+		return firstLevel.levelsExistans(new ArrayList<String>());
 	}
 	
 	/** Loads the levels of the category type.
@@ -98,12 +95,10 @@ public class Category {
 		while((line=b.readLine())!=null) {	
 			String [] reader = line.split(",");
 			this.addLevel(new Level(reader[0],reader[1],reader[2],Integer.parseInt(reader[3])));
-			System.out.println("animales while");
-			
+			System.out.println(reader[0]+""+reader[1]+""+reader[2]+""+reader[3]);
 		}
 		b.close();
 	}
-	
 	
 	/** Adds part 1 A level to the category.
 	 * if the firstlevel !=null try add part2
@@ -113,21 +108,7 @@ public class Category {
 		if(firstLevel==null)
 			firstLevel=l;
 		else
-			addLevel(l,firstLevel);
-	}
-	
-	/** addLevel part2 adds a level to the linked list last position
-	 * @param l -level object that it's going to be added- l!=null
-	 * @param r -the level that used as reference to know the position in the linked list- r!=null
-	 */
-	public void addLevel(Level l,Level r) {
-		if(r.getNext()==null) {
-			r.setNext(l);
-			l.setPrev(l);
-			System.out.println("animales add");
-		}	
-		else
-			addLevel(l,r.getNext());	
+			firstLevel.addLevel(l);
 	}
 	
 	/** Creates an ArrayList of categories
@@ -141,44 +122,6 @@ public class Category {
 		}
 		return list;
 	}
-	
-	public void loadPuzzle(int width, int hight) {
-		if(this.flag) {
-			firstLevel.loadLevel(width, hight);
-		}else {
-			next.loadPuzzle(width, hight);
-		}
-	}
-	
-	
-	
-	public ArrayList<String> getLevels(String nameCategory){
-		ArrayList<String> list = new ArrayList<String>();
-		System.out.println(this.name);
-		System.out.println("Caricaturas".compareTo(this.name));
-		System.out.println(this.name.equalsIgnoreCase(nameCategory));
-		System.out.println(this.next==null);
-		if(this.name.equalsIgnoreCase(nameCategory)) {
-			list = firstLevel.levelsExistans(list);
-			System.out.println("cat");
-		}else if(this.next != null){
-			list = this.next.getLevels(nameCategory);
-			System.out.println("cat2");
-		}
-		return list;
-	}
-	
-	
-	public Category getCategory(String name) {
-		Category cat = null;
-		if(name.equals(this.name)) {
-			cat=  this;
-		}else {
-			cat = next.getCategory(name);
-		}
-		return cat;
-	}
-	
 
 	/**
 	 * @return the firstLevel
@@ -186,91 +129,54 @@ public class Category {
 	public Level getFirstLevel() {
 		return firstLevel;
 	}
-
 	/**
 	 * @param firstLevel the firstLevel to set
 	 */
 	public void setFirstLevel(Level firstLevel) {
 		this.firstLevel = firstLevel;
 	}
-
 	/**
 	 * @return the name
 	 */
 	public String getName() {
 		return name;
 	}
-
 	/**
 	 * @param name the name to set
 	 */
 	public void setName(String name) {
 		this.name = name;
 	}
-
-	/**
-	 * @return the images
-	 */
-	public String[] getImages() {
-		return images;
-	}
-
-	/**
-	 * @param images the images to set
-	 */
-	public void setImages(String[] images) {
-		this.images = images;
-	}
-
 	/**
 	 * @return the next
 	 */
 	public Category getNext() {
 		return next;
 	}
-
 	/**
 	 * @param next the next to set
 	 */
 	public void setNext(Category next) {
 		this.next = next;
 	}
-
 	/**
 	 * @return the prev
 	 */
 	public Category getPrev() {
 		return prev;
 	}
-
 	/**
 	 * @param prev the prev to set
 	 */
 	public void setPrev(Category prev) {
 		this.prev = prev;
 	}
-
-	/**
-	 * @return the level
-	 */
-	public Level getLevel() {
-		return level;
-	}
-
-	/**
-	 * @param level the level to set
-	 */
-	public void setLevel(Level level) {
-		this.level = level;
-	}
-
 	/**
 	 * @return the flag
 	 */
 	public Boolean getFlag() {
 		return flag;
 	}
-
 	/**
 	 * @param flag the flag to set
 	 */

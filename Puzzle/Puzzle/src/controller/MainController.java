@@ -21,24 +21,37 @@ private Scene puzzle;
 		puzzle = new Scene();
 	}
 	
+	public String getImage() {
+		return puzzle.getImage();
+	}
+	
+	public int loadImage(int width, int hight) {
+		int dificulty = puzzle.loadImage(width, hight);
+		return dificulty;
+	}
+	
 	public void addPlayer(String name) {
+		//lanzar exception
 		puzzle.addPlayer(name);
 	}
 	
-	
-	public ArrayList<String> getCategoriesNames(){
-		ArrayList<String> list = puzzle.getCategories();
-		return list;
+	public int[] dimentions(int row, int column) {
+		return puzzle.getDimentions(row, column);
 	}
 	
-	public ArrayList<String> getLevelsCategory(String nameCategory){
-		System.out.println("main");
-		ArrayList<String> list = puzzle.getLevelsCategory(nameCategory);
-		return list;
+	public void levelSelected(String nameLevel) {
+		puzzle.levelSelected(nameLevel);
 	}
 	
-	public void loadCategories() {
-		puzzle.loadCategorys();
+	/*
+	 * 
+	 */
+	public void selectedPlayer(String name) throws PlayerNotSelectedException {
+		if(name !=null) {
+    		puzzle.selectedPlayer(name);
+    	}else {
+    		throw new PlayerNotSelectedException();
+    	}
 	}
 	
 	/*
@@ -49,36 +62,13 @@ private Scene puzzle;
 		return list;
 	}
 	
-	public void selectedPlayer(String name) throws PlayerNotSelectedException {
-		if(name !=null) {
-    		puzzle.selectedPlayer(name);
-    	}else {
-    		throw new PlayerNotSelectedException();
-    	}
+	public ArrayList<String> getCategoryNames() {
+		return puzzle.getCategories();
 	}
-	
-	public void loadGame(String levelName, String category) throws LevelNotSelectedException {
-		if(levelName != "" && levelName != null) {
-			loadGame(levelName, category);
-		}else {
-			throw new LevelNotSelectedException("");
-		}
+
+	public ArrayList<String> getLevelNames(String categoryName) {
+		return puzzle.getLevelsCategory(categoryName);
 	}
-	
-	public String getImage() {
-		String image = puzzle.getImage();
-		return image;
-	}
-	
-	public void loadLevel(int width, int hight) {
-		puzzle.loadPuzzle(width, hight);
-	}
-	
-	public int[] dimentions(int r, int c) {
-		int[] inf = puzzle.getInfoSection(r, c);
-		return inf;
-	}
-	
 	
 	//volver  los nombres unas constantes
 	public void conection(FXMLLoader fxml, String controller) {
@@ -104,5 +94,7 @@ private Scene puzzle;
 		MainController mC = new MainController();
 		
 	}
+
+	
 
 }
