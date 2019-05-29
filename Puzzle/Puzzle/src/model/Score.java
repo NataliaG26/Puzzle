@@ -22,6 +22,24 @@ public class Score implements Serializable{
 		this.setLeft(null);
 	}
 	
+	public void addScore(Player player, long score) {
+		if(score >= currentTime) {
+			if(right== null) {
+				right = new Score(score);
+				right.setPlayer(player);
+			}else {
+				right.addScore(player, score);
+			}
+		}else {
+			if(left== null) {
+				left = new Score(score);
+				left.setPlayer(player);
+			}else {
+				left.addScore(player, score);
+			}
+		}
+	}
+	
 	/** Converts the long into a time message in format hh/mm/ss.
 	 * @param currentTime -the long that is going to be turn into a string- </Pre>  currentTime!=null.
 	 * @return the hour in format hh/mm/ss.

@@ -5,6 +5,8 @@ import java.net.URL;
 import java.util.Random;
 import java.util.ResourceBundle;
 
+import javax.swing.JOptionPane;
+
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -22,6 +24,7 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.RowConstraints;
+import threads.CheckerThread;
 import threads.MakeAMessOfThread;
 
 public class GameController implements Initializable, EventHandler<KeyEvent>{
@@ -53,11 +56,22 @@ public class GameController implements Initializable, EventHandler<KeyEvent>{
 			MakeAMessOfThread thread = new MakeAMessOfThread(this, dif);
 			thread.run();
 			//thread.join();
-			System.out.println("hilo");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+			//CheckerThread checker = new CheckerThread(this);
+			//checker.run();
+	}
+	
+	public boolean verifiGame() {
+		int[][] puzzleID = new int[images.length][images.length];
+		for (int i = 0; i < puzzleID.length; i++) {
+			for (int j = 0; j < puzzleID[i].length; j++) {
+				puzzleID[i][j] = Integer.parseInt(images[i][j].getId());
+			}
+		}
+		return mainController.verifiGame(puzzleID);
 	}
 	
 	public void makeAMessOf(int n) {
@@ -183,13 +197,15 @@ public class GameController implements Initializable, EventHandler<KeyEvent>{
 		default:
 			break;
 		}
+		if(verifiGame()) {
+			JOptionPane.showMessageDialog(null, "Ganaste");
+		}
 	}
 
 	public void createGridPane(int n) {
 		images = new Node[n][n];
 		gridPane.getColumnConstraints().clear();
 		gridPane.getRowConstraints().clear();
-		System.out.println(n+"");
 		while(n > 0) {
 			gridPane.getColumnConstraints().add(new ColumnConstraints());
 			gridPane.getRowConstraints().add(new RowConstraints());
@@ -203,8 +219,8 @@ public class GameController implements Initializable, EventHandler<KeyEvent>{
 		for (int i = 0; i < m; i++) {
 			for (int j = 0; j < m; j++) {
 				ImageView imgV = new ImageView();
-				if(i != m-1 || j !=m-1) {
 				int[] inf = mainController.dimentions(i, j);
+				if(i != m-1 || j !=m-1) {
 				WritableImage wi = new WritableImage(px, inf[0], inf[1], inf[2], inf[3]);
 				imgV.setImage(wi);
 				imgV.setId(inf[4]+"");
@@ -212,6 +228,7 @@ public class GameController implements Initializable, EventHandler<KeyEvent>{
 				}else {
 					gridPane.add(imgV, j, i);
 				}
+				imgV.setId(inf[4]+"");
 				images[i][j] = imgV;
 			}
 		}

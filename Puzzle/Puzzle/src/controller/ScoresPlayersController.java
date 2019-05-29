@@ -5,31 +5,34 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TableView;
 import javafx.stage.Stage;
 
 public class ScoresPlayersController implements Initializable{
 	
 
 private MainController mainController;
-	
 
-	
-	public void goToPrincipal(ActionEvent event) {
-		try {
-			Parent root;
-			root = FXMLLoader.load(getClass().getResource("../userInterface/principal.fxml"));
-		Stage stage = new Stage();
-		Scene scene = new Scene(root);
-		stage.setScene(scene);
-		stage.show();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
+@FXML
+private ComboBox<?> category;
+
+@FXML
+private TableView<?> tableView;
+
+@FXML
+private ListView<?> listView;
+
+@FXML
+void loadLevels(ActionEvent event) {
+
+}
 	
 	public void setMainController(MainController mainController) {
 		this.mainController = mainController;

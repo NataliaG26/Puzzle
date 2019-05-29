@@ -5,10 +5,13 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import exceptions.LevelNotSelectedException;
+import exceptions.NameWithSpaceException;
 import exceptions.PlayerNotSelectedException;
+import exceptions.SameNameException;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import model.Category;
+import model.Level;
 import model.Scene;
 
 public class MainController implements Initializable {
@@ -30,17 +33,34 @@ private Scene puzzle;
 		return dificulty;
 	}
 	
-	public void addPlayer(String name) {
-		//lanzar exception
-		puzzle.addPlayer(name);
+	public void addPlayer(String name) throws NameWithSpaceException, SameNameException {
+		if(name.equals("") || name.contains(" ")) {
+		throw new NameWithSpaceException();
+		}else if(puzzle.searchPlayer(name)!=null){
+			throw new SameNameException(name);
+		}else {
+			puzzle.addPlayer(name);
+		}
 	}
 	
 	public int[] dimentions(int row, int column) {
 		return puzzle.getDimentions(row, column);
 	}
 	
-	public void levelSelected(String nameLevel) {
-		puzzle.levelSelected(nameLevel);
+	public void levelSelected(String nameLevel) throws LevelNotSelectedException {
+		if(nameLevel == null) {
+			throw new LevelNotSelectedException(nameLevel);
+		}else {
+			puzzle.levelSelected(nameLevel);
+		}
+	}
+	
+	public boolean verifiGame(int[][] puzzleID) {
+		return puzzle.verifiGame(puzzleID);
+	}
+	
+	public Level getLevel() {
+		return puzzle.currentCategory().currentLevel();
 	}
 	
 	/*

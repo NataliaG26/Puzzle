@@ -1,11 +1,18 @@
 package model;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 /** 
- * @author Natalia Gonzales & Duvan Cuero
+ * @author Natalia Gonzalez & Duvan Cuero
  */
 public class Level {
+	
+	public final static String FOLDER = "../data/";
 	
 	private Level next;
 	private Level prev;
@@ -17,6 +24,7 @@ public class Level {
 	private int hight;
 	private boolean flag;
 	private Section[][] puzzle;
+	private Score firstScore;
 	
 	/** Level builder is the class builder
 	 * @param name -name of the level- <Pre:/> name!=null
@@ -32,8 +40,53 @@ public class Level {
 		puzzle = new Section[difficulty][difficulty];
 	}
 	
+	public void saveScores() {
+		ObjectOutputStream escribiendoFichero;
+		try {
+			escribiendoFichero = new ObjectOutputStream(new FileOutputStream(FOLDER+name+".txt") );
+			escribiendoFichero.writeObject(firstScore);
+            escribiendoFichero.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}     
+	}
+	
+	public void loadScores() {
+		ObjectInputStream leyendoFichero;
+		try {
+			leyendoFichero = new ObjectInputStream(new FileInputStream(FOLDER+name+".txt") );
+			firstScore = (Score)leyendoFichero.readObject();
+            leyendoFichero.close();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	            
+	}
+	
+	public void addScore(Player player, long score) {
+		if(firstScore==null) {
+			firstScore = new Score(score);
+			firstScore.setPlayer(player);
+		}else {
+			firstScore.addScore(player, score);
+		}
+	}
+	
+	public boolean verifiGame(int[][] puzzleID) {
+		boolean verifi = true;
+		for (int i = 0; i < puzzleID.length && verifi; i++) {
+			for (int j = 0; j < puzzleID[i].length && verifi; j++) {
+				verifi = puzzleID[i][j] == puzzle[i][j].getId();
+			}
+		}
+		return verifi;
+	}
+	
 	public void resetLevels() {
 		this.flag=false;
+		this.puzzle = new Section[difficulty][difficulty]; 
 		if(next!=null) {
 			next.resetLevels();
 		}
@@ -60,7 +113,6 @@ public class Level {
 			sw = 0;
 			sh += h;
 		}
-		puzzle[puzzle.length-1][puzzle.length-1] = null;
 	}
 	
 	public void addLevel(Level level) {
@@ -215,6 +267,14 @@ public class Level {
 	 */
 	public void setPuzzle(Section[][] puzzle) {
 		this.puzzle = puzzle;
+	}
+
+	public Score getScores() {
+		return firstScore;
+	}
+
+	public void setScores(Score score) {
+		this.firstScore = score;
 	}
 	
 	

@@ -6,8 +6,10 @@ import java.util.ResourceBundle;
 
 import javax.swing.JOptionPane;
 
+import exceptions.NameWithSpaceException;
 import exceptions.PLayerNotFoundException;
 import exceptions.PlayerNotSelectedException;
+import exceptions.SameNameException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -31,7 +33,7 @@ private MainController mainController;
     private ListView<String> listView;
 
     @FXML
-    void addPlayer(ActionEvent event) {
+    void addPlayer(ActionEvent event) throws NameWithSpaceException, SameNameException {
     	mainController.addPlayer(txtNewPlayer.getText());
     	actualizeListView();
     }

@@ -12,7 +12,7 @@ public class MakeAMessOfThread extends Thread{
 	
 	public MakeAMessOfThread(GameController gameC, int n) throws IOException {
 		gameController = gameC;
-		this.n = n*n*n;
+		this.n = n*n;
 	}
 	
 	public void run(){

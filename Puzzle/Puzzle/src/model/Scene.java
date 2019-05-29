@@ -1,13 +1,15 @@
 package model;
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
-import exceptions.LevelNotUnlockedException;
 import exceptions.PLayerNotFoundException;
-import threads.PuzzleLoaderThread;
 
 public class Scene {
 	
@@ -83,6 +85,35 @@ public class Scene {
 	public void selectedPlayer(String name) {
 		player = searchPlayer(name);
 		loadCategorys();
+	}
+	
+	public void savePlayers() {
+		ObjectOutputStream escribiendoFichero;
+		try {
+			escribiendoFichero = new ObjectOutputStream(new FileOutputStream("../data/Players.txt") );
+			escribiendoFichero.writeObject(firstPlayer);
+            escribiendoFichero.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}     
+	}
+	
+	public void loadPlayers() {
+		ObjectInputStream leyendoFichero;
+		try {
+			leyendoFichero = new ObjectInputStream(new FileInputStream("../data/Players.txt") );
+			firstPlayer = (Player)leyendoFichero.readObject();
+            leyendoFichero.close();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	            
+	}
+	
+	public boolean verifiGame(int[][] puzzleID) {
+		return currentCategory().currentLevel().verifiGame(puzzleID);
 	}
 
 	public void levelSelected(String nameLevel) {

@@ -20,7 +20,7 @@ private MainController mainController;
     void bestSocres(ActionEvent event) {
 			
 		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("../userInterface/selectPlayer.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("../userInterface/bestScores.fxml"));
     		Parent root = loader.load();
     		mainController.conection(loader, "bestScores");
 			//root = FXMLLoader.load(getClass().getResource("../userInterface/BestScores.fxml"));
